@@ -9,7 +9,18 @@
   right: 0;
   background-color: #8800ff;
 }
-
+.exist {
+  color: red;
+  font-size: 10px;
+}
+.notExist {
+  color: green;
+  font-size: 10px;
+}
+.lab_ {
+  display: flex;
+  justify-content: space-between;
+}
 .form {
   background-color: #fff;
   padding: 10px;

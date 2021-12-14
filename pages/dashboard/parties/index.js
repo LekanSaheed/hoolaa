@@ -1,7 +1,7 @@
 import React from "react";
 
 const Parties = () => {
-  return <div>PArties</div>;
+  return <div>Parties</div>;
 };
 
 export default Parties;

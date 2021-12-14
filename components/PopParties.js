@@ -6,6 +6,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { ImLocation2 } from "react-icons/im";
 import { BsFillCalendar2WeekFill } from "react-icons/bs";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 const PopParties = () => {
   const parties = [
     {
@@ -71,10 +72,22 @@ const PopParties = () => {
       <Box display="flex" justifyContent="space-between">
         Pop Parties <button className={classes.btn_see}> See All</button>
       </Box>
-      <div className={classes.party_container}>
+      <motion.div className={classes.party_container}>
         {parties.map((party, id) => {
           return (
-            <div
+            <motion.div
+              initial={{ opacity: 0.5, scale: 0 }}
+               whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}
+              animate={{
+                x: 0,
+                scale: 1,
+                opacity: 1,
+                transitionEnd: {
+                  display: "block",
+                },
+              }}
+              transition={{ duration: 0.3, delay: id - 0.7 }}
               key={id}
               className={classes.party}
               onClick={() => router.push("/dashboard/parties/" + party.id)}
@@ -137,10 +150,10 @@ const PopParties = () => {
                   </Box>
                 </Box>
               </Box>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -7,8 +7,10 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BsCupStraw } from "react-icons/bs";
 import { useGlobalContext } from "../context/context";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { useAuthState } from "../context/AuthContext";
+import { useRouter } from "next/router";
+import { useAuthState, useAuthDispatch } from "../context/AuthContext";
 const navLinks = [
   { icon: <AiOutlineAppstore />, text: "All Parties", link: "/all-parties" },
   {
@@ -21,10 +23,18 @@ const navLinks = [
 ];
 
 const SideNav = () => {
+  const router = useRouter();
+  const dispatch = useAuthDispatch();
   const { user } = useAuthState();
   const { isToggled } = useGlobalContext();
+  const variants = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: "-100%" },
+  };
   return (
-    <div
+    <motion.nav
+      variants={variants}
+      animate={isToggled && "open"}
       className={`${classes.sideNav} ${
         isToggled ? classes.shrinkNav : classes.showNav
       }`}
@@ -46,15 +56,23 @@ const SideNav = () => {
           <span>
             {user.profile !== undefined ? user.profile.firstName : "loading"}
           </span>
-          <span>Username</span>
+          <span style={{ color: "#bababa" }}>
+            {user.profile !== undefined ? user.profile.username : "loading"}
+          </span>
           <span>Party Buddies</span>
         </div>
       )}
       <div>
-        <button className={classes.btn_start}>
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{ duration: 0.5 }}
+          className={classes.btn_start}
+          onClick={() => router.push("/dashboard/parties/new")}
+        >
           <FiPlusCircle />
           {!isToggled && " Start a Party"}
-        </button>
+        </motion.button>
       </div>
       <div
         className={`${classes.nav_container} ${
@@ -76,7 +94,8 @@ const SideNav = () => {
           );
         })}
       </div>
-    </div>
+      <div onClick={() => dispatch("LOGOUT")}>Logout</div>
+    </motion.nav>
   );
 };
 

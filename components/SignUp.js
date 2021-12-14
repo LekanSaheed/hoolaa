@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./SignUp.module.css";
+import { LinearProgress } from "@mui/material";
 import {
   createUserWithEmailAndPassword,
   db,
@@ -24,27 +25,54 @@ const SignUp = () => {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isExist, setIsExist] = useState(true);
+  const [usnStat, setUsnStat] = useState("");
   const [error, setError] = useState("");
+  useEffect(() => {
+    if (username.length > 0) {
+      checkUsernameAvailability();
+    } else {
+      setUsnStat("");
+    }
+  }, [username, usnStat, setUsnStat]);
   const auth = getAuth();
 
-  const test = () => {};
-  const createAccount = async () => {
+  const checkUsernameAvailability = async () => {
     setLoading(true);
-    const allUsers = [];
     const q = query(collection(db, "users"), where("username", "==", username));
-    const querySnapshot = await getDocs(q);
-    const isExist = null;
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-
-      if (doc.exists) {
-        toast.error("Username not available");
-        console.log(doc.id, " => ", doc.data());
-        isExist += true;
-        return;
+    const querySnapshot = await getDocs(q).then((doc) => {
+      if (doc.empty) {
+        setIsExist(false);
+        setLoading(false);
+        setUsnStat("Username Available");
+      } else {
+        setIsExist(true);
+        setLoading(false);
+        setUsnStat("Username not available");
       }
     });
-    console.log(isExist);
+
+    querySnapshot;
+    // forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   console.log(doc.exists());
+    //   return doc.exists();
+    //   // if (!doc.exists()) {
+    //   //   setIsExist(false);
+    //   //   setUsnStat("Username is available");
+    //   //   console.log("Availa");
+    //   //   return;
+    //   // }
+    //   // toast.error("Username not available");
+    //   // console.log(doc.id, " => ", doc);
+    //   // setIsExist(true);
+    //   // setUsnStat("Username is not available");
+    // });
+  };
+
+  const createAccount = async () => {
+    setLoading(true);
+    console.log(isExist, "");
     // const querySnapshot = await getDocs(collection(db, "users"));
     !isExist &&
       createUserWithEmailAndPassword(auth, email, password)
@@ -56,10 +84,10 @@ const SignUp = () => {
             setDoc(
               userRef,
               {
-                username: username,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
+                username: username.toLowerCase().trim(),
+                firstName: firstName.trim(),
+                lastName: lastName.trim(),
+                email: email.trim(),
                 created_at: Timestamp.fromDate(new Date()), //Timestamp.fromDate(new Date("December 10, 1815")),
               },
               { merge: true }
@@ -67,7 +95,16 @@ const SignUp = () => {
               setError("");
               setLoading(false);
               console.log("user Created");
-              toast.success("Account Created");
+              toast.success(
+                "Account Created, Check mail for email verification"
+              );
+              setFirstName("");
+              setLastName("");
+              setEmail("");
+              setUsername("");
+              setPassword("");
+              setConfirmPwd("");
+              setIsExist(false);
             });
           }
         })
@@ -82,6 +119,7 @@ const SignUp = () => {
   return (
     <div className={classes.container}>
       <form className={classes.form}>
+        {loading && <LinearProgress />}
         <div>Create account</div>
         <div className={classes.input_container}>
           <label>First Name</label>
@@ -104,12 +142,19 @@ const SignUp = () => {
           </div>
         </div>
         <div className={classes.input_container}>
-          <label>username</label>
+          <div className={classes.lab_}>
+            <label>Username</label>
+            <span className={isExist ? classes.exist : classes.notExist}>
+              {usnStat}
+            </span>
+          </div>
           <div className={classes.input_group}>
             <span>ico</span>
             <input
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={async (e) => {
+                await setUsername(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -140,11 +185,23 @@ const SignUp = () => {
             />
           </div>
         </div>
-        <Button fullWidth={true} onClick={createAccount}>
+        <Button
+          disabled={
+            isExist ||
+            !firstName ||
+            !lastName ||
+            !email ||
+            !password ||
+            !confirmPwd ||
+            !username ||
+            password !== confirmPwd
+          }
+          fullWidth={true}
+          onClick={createAccount}
+        >
           {" "}
           Create Account
         </Button>
-        <Button onClick={test}>TEst</Button>
       </form>
     </div>
   );
