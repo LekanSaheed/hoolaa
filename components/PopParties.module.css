@@ -1,0 +1,64 @@
+.container {
+  padding: 10px;
+}
+.btn_see {
+  padding: 8px 10px;
+  color: #8800ff;
+  border: none;
+  border-radius: 50px;
+  background-color: #8800ff13;
+  font-size: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn_see:hover {
+  background-color: #8800ff83;
+  transition: all 0.3s;
+}
+.party_container {
+  display: grid;
+  grid-gap: 30px;
+  overflow-x: scroll;
+  flex-basis: 100%;
+  grid-template-columns: repeat(10, 45.3%);
+}
+.party {
+  display: flex;
+  flex-direction: column;
+  padding: 13px;
+  border: solid 1px #efefef;
+  border-radius: 10px;
+  width: 100%;
+  flex: 1 1 100%;
+  cursor: pointer;
+}
+.people_number {
+  color: rgba(0, 0, 0, 0.582);
+  font-weight: 400;
+  font-size: 12px;
+}
+.partyList {
+  padding: 8px;
+  background-color: #efefef;
+  border-radius: 10px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-weight: 500;
+}
+.party_list_icon {
+  font-size: 20px;
+  color: #8800ffcb;
+  background-color: #efefef;
+  border-radius: 10px;
+  padding: 8px 20px;
+}
+
+@media (min-width: 801px) {
+  .party_list_icon {
+    font-size: 20px;
+  }
+}

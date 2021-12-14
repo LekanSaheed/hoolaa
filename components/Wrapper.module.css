@@ -1,0 +1,19 @@
+.main {
+  min-height: 100vh;
+}
+@media (min-width: 1024px) {
+  .main {
+    width: 100%;
+    overflow-x: hidden;
+    margin-left: 300px;
+    padding: 15px;
+    transition: all 0.2s;
+  }
+  .shrinkMain {
+    margin-left: 100px;
+    transition: all 0.2s;
+  }
+  .container {
+    display: flex;
+  }
+}
