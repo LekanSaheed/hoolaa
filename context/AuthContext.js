@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useReducer } from "react";
+import { toast } from "react-toastify";
 import {
   getAuth,
   onAuthStateChanged,
   onSnapshot,
   db,
   doc,
+  signOut,
+  sendEmailVerification,
 } from "../firebase/firebase";
 const StateContext = createContext({
   authenticated: false,
@@ -24,7 +27,16 @@ const reducer = (state, { type, payload }) => {
         user: payload,
       };
     case "LOGOUT":
-      localStorage.removeItem("uid");
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+          localStorage.removeItem("uid");
+        })
+        .catch((error) => {
+          // An error happened.
+          toast.error(error.message);
+        });
       return {
         ...state,
         authenticated: false,
@@ -69,7 +81,7 @@ export const AuthProvider = ({ children }) => {
       const auth = getAuth();
       const uid = localStorage.getItem("uid");
       await onAuthStateChanged(auth, (user) => {
-        if (user || uid) {
+        if (user && user.emailVerified) {
           onSnapshot(doc(db, "users", user.uid), (doc_) => {
             console.log("Current data: ", doc_.data());
 
@@ -82,6 +94,20 @@ export const AuthProvider = ({ children }) => {
           // https://firebase.google.com/docs/reference/js/firebase.User
 
           // ...
+        } else if (user && user.emailVerified === false) {
+          dispatch("STOP_LOADING");
+          router.push("/login");
+          sendEmailVerification(auth.currentUser)
+            .then(() => {
+              // Email verification sent!
+              // ...
+              toast.info(
+                "Please verify email, check mail for email verification"
+              );
+            })
+            .catch((err) => {
+              toast.error(err.message);
+            });
         } else {
           // User is signed out
           // ...

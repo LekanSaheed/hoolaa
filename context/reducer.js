@@ -5,4 +5,10 @@ export const reducer = (state, action) => {
       isToggled: !state.isToggled,
     };
   }
+  if (action.type === "TOGGLE_MOBILE") {
+    return {
+      ...state,
+      isToggleMobile: !state.isToggleMobile,
+    };
+  }
 };

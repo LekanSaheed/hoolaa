@@ -17,6 +17,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
+  sendEmailVerification,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -33,7 +35,7 @@ const firebaseConfig = {
 // }
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
 const db = getFirestore(app);
 
 export {
@@ -49,5 +51,7 @@ export {
   setDoc,
   doc,
   where,
+  signOut,
+  sendEmailVerification,
   Timestamp,
 };

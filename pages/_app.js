@@ -13,6 +13,9 @@ function MyApp({ Component, pageProps }) {
   const toggleNav = () => {
     dispatch({ type: "TOGGLE_NAV" });
   };
+  const toggleMobile = () => {
+    dispatch({ type: "TOGGLE_MOBILE" });
+  };
   const protectedRoutes = [
     "/dashboard",
     "/dashboard/parties",
@@ -24,7 +27,7 @@ function MyApp({ Component, pageProps }) {
     "/payroll/topup",
   ];
   return (
-    <AppContext.Provider value={{ ...state, toggleNav }}>
+    <AppContext.Provider value={{ ...state, toggleNav, toggleMobile }}>
       <AuthProvider>
         <PrivateRoute protectedRoutes={protectedRoutes}>
           <ToastContainer autoClose={3000} />

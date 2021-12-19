@@ -1,0 +1,77 @@
+.bc {
+  background-color: #fcfcfc;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+  flex-direction: column;
+  padding: 10px;
+}
+.container {
+  width: 95%;
+  height: 80vh;
+  background-color: white;
+  border-radius: 10px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 20px 26px -13px rgba(22, 92, 255, 0.541);
+}
+.cardCont {
+  height: 100%;
+}
+.gridCont {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 15px;
+  transition: all 0.6s ease-in-out;
+}
+.lgDate {
+  display: none;
+}
+.cont_intro {
+  font-weight: 500;
+  font-size: 22px;
+  color: #2496ff;
+}
+.cont_main {
+  padding: 20px;
+  text-align: center;
+  height: 100%;
+  overflow-y: auto;
+}
+.listCont {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 13px;
+  transition: all 0.6s ease-in-out;
+}
+.card {
+  background-color: salmon;
+  border-radius: 10px;
+  height: 250px;
+  padding: 20px;
+  width: 100%;
+  cursor: pointer;
+}
+._footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.card:nth-child(2) {
+  background-color: slateblue;
+}
+.card:nth-child(3) {
+  background-color: coral;
+}
+@media (min-width: 767px) {
+  .container {
+  }
+  .lgDate {
+    display: block;
+  }
+  .mobileDate {
+    display: none;
+  }
+}

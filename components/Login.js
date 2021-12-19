@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import classes from "./Login.module.css";
 import { useAuthDispatch, useAuthState } from "../context/AuthContext";
-
+import { toast } from "react-toastify";
 import Head from "next/head";
-import { signInWithEmailAndPassword, getAuth } from "../firebase/firebase";
+import {
+  signInWithEmailAndPassword,
+  getAuth,
+  onSnapshot,
+  doc,
+  db,
+  sendEmailVerification,
+} from "../firebase/firebase";
 import { useRouter } from "next/router";
 
 const Login = () => {
@@ -27,17 +34,31 @@ const Login = () => {
         console.log(userCredential);
         // Signed in
         const _user = userCredential.user;
-        if (_user) {
-          dispatch("LOGIN", _user);
-          router.push("/dashboard");
-          console.log(_user);
+        if (_user && _user.emailVerified) {
+          // dispatch("LOGIN", _user);
+
+          onSnapshot(doc(db, "users", _user.uid), (doc_) => {
+            console.log("Current data: ", doc_.data());
+
+            dispatch("LOGIN", { user: _user, profile: doc_.data() });
+            router.push("/dashboard");
+            dispatch("STOP_LOADING");
+          });
+        } else if (_user && _user.emailVerified === false) {
+          sendEmailVerification(auth.currentUser).then(() => {
+            // Email verification sent!
+            // ...
+            toast.info(
+              "Please verify email, check mail for email verification"
+            );
+          });
         }
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(error.code);
+        console.log(error);
       });
   };
   return (

@@ -1,12 +1,21 @@
 .header {
   display: flex;
-
+  position: sticky;
+  top: 0;
   padding: 10px;
   justify-content: space-between;
+  background-color: #fff;
 }
 .menu {
   cursor: pointer;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  color: #8800ff;
 }
+
 .search input {
   padding: 8px;
   border-radius: 50px;
@@ -25,6 +34,27 @@
 }
 .icon {
   color: rgba(0, 0, 0, 0.61);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+}
+.noMobile {
+  display: none !important;
+}
+.lgMenu {
+  display: none;
+}
+@media (min-width: 767px) {
+  .noMobile {
+    display: block !important;
+  }
+  .lgMenu {
+    display: flex;
+  }
+  .mobileMenu {
+    display: none;
+  }
 }
 @media (min-width: 1024px) {
   .header {
