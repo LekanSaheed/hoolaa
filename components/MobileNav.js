@@ -54,9 +54,8 @@ const MobileNav = () => {
                   <MdClose />
                 </div>
                 {navLinks.map((nav, id) => (
-                  <Link href={"/dashboard" + nav.link}>
+                  <Link key={id} href={"/dashboard" + nav.link}>
                     <motion.a
-                      key={id}
                       whileHover={{ scale: 1.1 }}
                       variants={itemVariants}
                     >
