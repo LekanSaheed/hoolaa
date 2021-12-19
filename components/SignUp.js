@@ -105,7 +105,6 @@ const SignUp = () => {
               setPassword("");
               setConfirmPwd("");
               setIsExist(false);
-              
             });
           }
         })
