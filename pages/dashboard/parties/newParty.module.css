@@ -1,5 +1,5 @@
 .bc {
-  background-color: #fcfcfc;
+  background-color: #fff;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -19,6 +19,60 @@
 }
 .cardCont {
   height: 100%;
+}
+.reviewText {
+  padding: 13px;
+  background-color: #efefef;
+  width: 100%;
+  display: block;
+  border-radius: 6px;
+}
+.reviewIcon {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8800ff;
+  background-color: #efefef;
+  border-radius: 50%;
+}
+.custom_file_input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+.upload {
+  background-color: #8800ff4e;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+.custom_file_input {
+  display: none;
+}
+.custom_file_input::before {
+  display: none;
+  content: "+";
+  display: inline-block;
+  background: #8800ff;
+  border: none;
+  color: white;
+  border-radius: 3px;
+  padding: 10px 15px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  /* text-shadow: 1px 1px #fff; */
+  font-weight: 700;
+  font-size: 10pt;
 }
 .gridCont {
   display: grid;
@@ -65,7 +119,12 @@
 .card:nth-child(3) {
   background-color: coral;
 }
-@media (min-width: 767px) {
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+@media (min-width: 801px) {
   .container {
   }
   .lgDate {

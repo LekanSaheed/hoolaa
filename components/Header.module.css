@@ -45,7 +45,7 @@
 .lgMenu {
   display: none;
 }
-@media (min-width: 767px) {
+@media (min-width: 801px) {
   .noMobile {
     display: block !important;
   }

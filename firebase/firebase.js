@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   getFirestore,
   collection,
@@ -10,6 +11,7 @@ import {
   onSnapshot,
   where,
   query,
+  addDoc,
 } from "firebase/firestore";
 
 import {
@@ -54,4 +56,9 @@ export {
   signOut,
   sendEmailVerification,
   Timestamp,
+  addDoc,
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
 };

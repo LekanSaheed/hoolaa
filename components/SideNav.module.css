@@ -48,7 +48,7 @@
   justify-content: center;
   display: block;
 }
-@media (min-width: 1024px) {
+@media (min-width: 801px) {
   .sideNav {
     display: block;
     width: 300px;
