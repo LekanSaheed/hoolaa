@@ -1,9 +1,16 @@
+@font-face {
+  font-family: washeim;
+  src: url(washeim/GTWalsheimPro-Regular.ttf) format("truetype"),
+    url(washeim/GTWalsheimPro-Regular.woff) format("woff"),
+    url(washeim/GTWalsheimPro-Regular.woff2) format("woff2"),
+    url(washeim/GTWalsheimPro-Regular.eot);
+  font-weight: normal;
+}
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: washeim, sans-serif;
 }
 
 a {

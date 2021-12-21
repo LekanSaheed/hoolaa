@@ -19,10 +19,11 @@
 .party_container {
   display: grid;
   grid-gap: 30px;
-  overflow-x: scroll;
+  overflow-x: auto;
   flex-basis: 100%;
   grid-template-columns: repeat(10, 90%);
 }
+
 .party {
   display: flex;
   flex-direction: column;
@@ -42,12 +43,15 @@
   padding: 8px;
   background-color: #efefef;
   border-radius: 10px;
-  font-size: 10px;
+  font-size: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  font-weight: 500;
+  font-weight: 590;
+}
+.partyName {
+  font-weight: 600;
 }
 .party_list_icon {
   font-size: 20px;
@@ -59,6 +63,10 @@
 @media (min-width: 600px) {
   .party_container {
     grid-template-columns: repeat(10, 45.3%);
+    overflow: hidden;
+  }
+  .party_container:hover {
+    overflow-x: scroll;
   }
 }
 

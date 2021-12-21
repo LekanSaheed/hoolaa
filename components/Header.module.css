@@ -2,7 +2,7 @@
   display: flex;
   position: sticky;
   top: 0;
-  padding: 10px;
+  padding: 18px 10px;
   justify-content: space-between;
   background-color: #fff;
 }
@@ -24,6 +24,9 @@
   font-size: 14px;
   width: 100%;
   background-color: #fcfcfc;
+}
+.search {
+  width: 100%;
 }
 .header_group {
   display: flex;
@@ -54,6 +57,9 @@
   }
   .mobileMenu {
     display: none;
+  }
+  .search {
+    width: auto;
   }
 }
 @media (min-width: 1024px) {

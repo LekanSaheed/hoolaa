@@ -72,6 +72,7 @@ const PopParties = () => {
   // ];
   const [parties, setParties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
   React.useEffect(() => {
@@ -194,7 +195,7 @@ const PopParties = () => {
         Pop Parties <button className={classes.btn_see}> See All</button>
       </Box>
       <motion.div className={classes.party_container}>
-        {loading && (
+        {loading && !isLoaded && (
           <>
             {" "}
             <HoolaSkels />
@@ -209,7 +210,7 @@ const PopParties = () => {
             <HoolaSkels />
           </>
         )}
-        {!loading && parties.length === 0 && "No Parties"}
+        {parties.length === 0 && !loading && "No parties"}
         {parties.map((party, id) => {
           const d = party.start_date.toDate().toDateString();
           console.log(d);
@@ -222,16 +223,18 @@ const PopParties = () => {
                 scale: 1,
                 opacity: 1,
               }}
-              transition={{ duration: 0.3, delay: id - 0.7 }}
+              transition={{ duration: 0.2, delay: id - 0.9 }}
               key={id}
               className={classes.party}
               onClick={() => router.push("/dashboard/parties/" + party.id)}
             >
               <img
+                onLoad={() => setIsLoaded(true)}
                 src={party.cover_img}
                 style={{ height: "200px", width: "100%", borderRadius: "6px" }}
                 alt={party.partyName}
               />
+
               <Box
                 display="flex"
                 flexDirection="column"
@@ -246,7 +249,7 @@ const PopParties = () => {
                     {!party.creator.displayPics &&
                       party.creator.username.slice(0, 1).toUpperCase()}
                   </Avatar>
-                  {party.partyName}
+                  <span className={classes.partyName}> {party.partyName}</span>
                 </Box>
                 <Box display="flex" gap="8px" alignItems="center">
                   <Avatar

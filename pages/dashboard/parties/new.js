@@ -156,16 +156,16 @@ function HorizontalLinearStepper() {
         },
       },
       "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active": {
-        color: "#8800ff99",
+        color: "#8800ff99 !important",
       },
       "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed": {
-        color: "goldenrod",
+        color: "goldenrod !important",
       },
       "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root": {
         // color: "#8800ff",
         [theme.breakpoints.down(767)]: {
-          width: "0.5em",
-          height: "0.5em",
+          width: "0.5em !important",
+          height: "0.5em !important",
         },
       },
     },
