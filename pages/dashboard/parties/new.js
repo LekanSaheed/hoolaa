@@ -233,7 +233,7 @@ function HorizontalLinearStepper() {
                       justifyContent: "center",
                     }}
                   >
-                    <label for="upload" className={classes.upload}>
+                    <label htmlFor="upload" className={classes.upload}>
                       <input
                         id="upload"
                         className={classes.custom_file_input}
