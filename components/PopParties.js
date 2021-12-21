@@ -89,7 +89,6 @@ const PopParties = () => {
             // setParties(myParties);
             console.log(myParties);
           });
-          setLoading(false);
         })
         .then(() => {
           temp.forEach(async (t) => {
@@ -102,6 +101,7 @@ const PopParties = () => {
                 };
               });
               setParties(newParty);
+              setLoading(false);
               console.log(newParty, "Py");
             });
           });

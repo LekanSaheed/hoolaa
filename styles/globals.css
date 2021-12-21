@@ -12,7 +12,9 @@ body {
   margin: 0;
   font-family: washeim, sans-serif;
 }
-
+body::placeholder {
+  font-family: washeim !important;
+}
 a {
   color: inherit;
   text-decoration: none;

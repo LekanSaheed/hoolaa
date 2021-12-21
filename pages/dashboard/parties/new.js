@@ -15,7 +15,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
+import { Button, InputAdornment } from "@mui/material";
 import { TextField, makeStyles } from "@material-ui/core";
 import Select from "react-select";
 import {
@@ -55,6 +55,7 @@ import { useAuthState } from "../../../context/AuthContext";
 import Image from "next/image";
 import { BiCategory, BiPlusCircle } from "react-icons/bi";
 import moment from "moment";
+import { MdAccountCircle } from "react-icons/md";
 const steps = ["Select Category", "Party details", "Review"];
 
 function HorizontalLinearStepper() {
@@ -155,11 +156,31 @@ function HorizontalLinearStepper() {
           fontSize: "10px !important",
         },
       },
+      "& .MuiOutlinedInput-marginDensed": {
+        outline: "none",
+        border: "none",
+      },
       "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active": {
         color: "#8800ff99 !important",
       },
       "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed": {
         color: "goldenrod !important",
+      },
+      "& .Mui-focused": {
+        border: "none !important",
+        backgroundColor: "red",
+        outline: "none !important",
+      },
+      "& .MuiInputBase-root": {
+        fontFamily: "washeim",
+      },
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: "red  !important",
+        backgroundColor: "red",
+        outline: "none",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "red !important",
       },
       "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root": {
         // color: "#8800ff",
@@ -167,6 +188,18 @@ function HorizontalLinearStepper() {
           width: "0.5em !important",
           height: "0.5em !important",
         },
+      },
+    },
+    border: {
+      // borderColor: "#8800ff !important",
+      fontFamily: "washeim !important",
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: "red  !important",
+        backgroundColor: "red",
+        outline: "none",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "red !important",
       },
     },
     label: {
@@ -257,6 +290,17 @@ function HorizontalLinearStepper() {
                     onChange={(e) => setpartyName(e.target.value)}
                     placeholder="Choose a party name"
                     fullWidth={true}
+                    sx={{ border: "none" }}
+                    InputProps={{
+                      classes: {
+                        notchedOutline: myclass.border,
+                      },
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <BsTextareaT />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Box>
                 <br />

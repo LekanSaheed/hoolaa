@@ -34,6 +34,21 @@
   flex: 1 1 100%;
   cursor: pointer;
 }
+
+.party_container::-webkit-scrollbar {
+  background-color: #fff;
+}
+
+.party_container::-webkit-scrollbar-thumb {
+  background-color: #8800ff;
+  border-radius: 50px;
+  box-shadow: 0 0 10px rgba(0 0 0 /17%);
+  border: solid 3px #fff;
+  background-clip: padding-box;
+}
+.party_container::-webkit-scrollbar-corner {
+  border-radius: 10px;
+}
 .people_number {
   color: rgba(0, 0, 0, 0.582);
   font-weight: 400;
