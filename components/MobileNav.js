@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useCycle } from "framer-motion";
 import { useGlobalContext } from "../context/context";
 import classes from "./MobileNav.module.css";
 import { navLinks } from "./SideNav";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { MdClose } from "react-icons/md";
 const itemVariants = {
   closed: {
@@ -25,7 +25,10 @@ const sideVariants = {
     },
   },
 };
+
+const links = [...navLinks, { text: "Create Party", link: "/parties/new" }];
 const MobileNav = () => {
+  const router = useRouter();
   const { isToggleMobile, toggleMobile } = useGlobalContext();
   return (
     <main>
@@ -53,15 +56,21 @@ const MobileNav = () => {
                 <div onClick={() => toggleMobile()}>
                   <MdClose />
                 </div>
-                {navLinks.map((nav, id) => (
-                  <Link key={id} href={"/dashboard" + nav.link}>
+                {links.map((nav, id) => (
+                  <div
+                    key={id}
+                    onClick={async () => {
+                      toggleMobile();
+                      router.push("/dashboard" + nav.link);
+                    }}
+                  >
                     <motion.a
                       whileHover={{ scale: 1.1 }}
                       variants={itemVariants}
                     >
                       {nav.text}
                     </motion.a>
-                  </Link>
+                  </div>
                 ))}
               </motion.div>
             </motion.aside>

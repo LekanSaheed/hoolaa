@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuthState, useAuthDispatch } from "../context/AuthContext";
 export const navLinks = [
+  { icon: <AiOutlineAppstore />, text: "Dashboard", link: "" },
   { icon: <AiOutlineAppstore />, text: "All Parties", link: "/all-parties" },
   {
     icon: <BsCupStraw />,

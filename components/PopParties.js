@@ -145,9 +145,12 @@ const PopParties = () => {
               />
               <Skeleton
                 variant="rectangular"
-                style={{ borderRadius: "10px" }}
                 height={30}
-                style={{ width: "100%", borderRadius: "10px" }}
+                style={{
+                  width: "100%",
+                  borderRadius: "10px",
+                  borderRadius: "10px",
+                }}
               />
             </Box>
           </Box>
