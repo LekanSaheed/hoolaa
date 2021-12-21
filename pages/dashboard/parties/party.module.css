@@ -1,0 +1,9 @@
+.cover_img {
+}
+
+@media (min-width: 801px) {
+  .cover_img {
+    height: 300px !important;
+    border-radius: 10px !important;
+  }
+}

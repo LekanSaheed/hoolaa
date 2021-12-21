@@ -7,6 +7,7 @@ import {
   getDocs,
   doc,
   setDoc,
+  getDoc,
   Timestamp,
   onSnapshot,
   where,
@@ -61,4 +62,5 @@ export {
   ref,
   uploadBytes,
   getDownloadURL,
+  getDoc,
 };

@@ -21,7 +21,7 @@
   grid-gap: 30px;
   overflow-x: scroll;
   flex-basis: 100%;
-  grid-template-columns: repeat(10, 45.3%);
+  grid-template-columns: repeat(10, 90%);
 }
 .party {
   display: flex;
@@ -55,6 +55,11 @@
   background-color: #efefef;
   border-radius: 10px;
   padding: 8px 20px;
+}
+@media (min-width: 600px) {
+  .party_container {
+    grid-template-columns: repeat(10, 45.3%);
+  }
 }
 
 @media (min-width: 801px) {

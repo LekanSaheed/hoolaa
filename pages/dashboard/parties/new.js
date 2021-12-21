@@ -98,7 +98,7 @@ function HorizontalLinearStepper() {
     addDoc(
       docRef,
       {
-        // cover_img: url,
+        cover_img: url,
         category: { label: category.label, value: category.value },
         start_date: myTimestamp,
         partyName,
@@ -117,19 +117,20 @@ function HorizontalLinearStepper() {
   const handleImageUpload = () => {
     const storage = getStorage();
     const storageRef = ref(storage, "cover-images/" + cover_img.name);
+    const metadata = {
+      contentType: "image/jpeg",
+      size: cover_img.size,
+    };
+    const uploadTask = uploadBytes(storageRef, cover_img, metadata);
 
-    uploadBytes(storageRef, cover_img.name && cover_img.name).then(
-      (snapshot) => {
-        console.log(snapshot);
-        getDownloadURL(ref(storage, "cover-images/" + cover_img.name)).then(
-          (url) => {
-            createParty(url);
-            console.log(url);
-          }
-        );
-        console.log("Uploaded a blob or file!");
-      }
-    );
+    uploadTask.then((snapshot) => {
+      console.log(snapshot);
+      getDownloadURL(storageRef).then((url) => {
+        createParty(url);
+        console.log(url);
+      });
+      console.log("Uploaded a blob or file!");
+    });
   };
   const handleNext = () => {
     let newSkipped = skipped;
