@@ -108,6 +108,7 @@ const Party = () => {
                   </span>
                   <span style={{ fontWeight: "600" }}>{party.location}</span>
                 </Box>
+                <Button variant="outlined">Edit</Button>
               </Box>
             </div>
             <div className={classes.menuContainer}>

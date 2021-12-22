@@ -68,6 +68,12 @@
 .custom_file_input {
   display: none;
 }
+.img_con {
+  width: 100%;
+}
+.img_con img {
+  width: 100%;
+}
 .custom_file_input::before {
   display: none;
   content: "+";

@@ -56,12 +56,13 @@ import Image from "next/image";
 import { BiCategory, BiDish, BiPlusCircle } from "react-icons/bi";
 import moment from "moment";
 import { MdAccountCircle } from "react-icons/md";
-
+import HoolaLoader from "../../../components/HoolaLoader";
 import states from "../../../components/state";
 import { ImLocation } from "react-icons/im";
 import { IoFastFoodOutline, IoPizzaOutline } from "react-icons/io5";
 import { GiWineBottle } from "react-icons/gi";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -84,6 +85,7 @@ function HorizontalLinearStepper() {
   const [menuCategory, setMenuCategory] = useState(null);
   const [menuPic1, setMenuPic1] = useState(null);
   const steps = ["Select Category", "Party details", "Review"];
+  const [loading, setLoading] = useState(false);
   const menuCategories = [
     { label: "Food", value: "food", icon: <IoFastFoodOutline /> },
     { label: "Drinks", value: "drink", icon: <GiWineBottle /> },
@@ -156,12 +158,20 @@ function HorizontalLinearStepper() {
         created_By: user.user.uid,
       },
       { merge: true }
-    ).then(() => {
-      handleNext();
-      console.log("DOcument Written");
-    });
+    )
+      .then(() => {
+        setLoading(false);
+
+        toast.success("Party Created Successfully");
+        handleNext();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
   };
   const handleImageUpload = () => {
+    setLoading(true);
     const storage = getStorage();
     const storageRef = ref(
       storage,
@@ -302,6 +312,8 @@ function HorizontalLinearStepper() {
       padding="10px"
       sx={{ width: "100%" }}
     >
+      {/* <HoolaLoader /> */}
+      {loading && <HoolaLoader />}
       <Stepper
         sx={{ borderBottom: 1, borderColor: "divider", padding: "10px" }}
         activeStep={activeStep}
@@ -322,10 +334,18 @@ function HorizontalLinearStepper() {
       {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - Continue to Preparing reservations
+            All steps completed - Continue to Menu Preparation
           </Typography>
+          <div className={classes.img_con}>
+            <img src="/done.png" />
+          </div>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              sx={{ flex: "1 1 auto" }}
+            />
+            <Button onClick={handleReset}>Back</Button>
             <Button onClick={() => router.push("/dashboard/my-parties")}>
               Continue to Reservation
             </Button>

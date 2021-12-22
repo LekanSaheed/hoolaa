@@ -5,6 +5,7 @@
   padding: 18px 10px;
   justify-content: space-between;
   background-color: #fff;
+  z-index: 300;
 }
 .menu {
   cursor: pointer;

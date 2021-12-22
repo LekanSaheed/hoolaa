@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 100000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  flex-direction: column;
+  left: 0;
+}
+.loader {
+  display: flex;
+
+  gap: 7px;
+}
+.ball {
+  background-color: #f700ffea;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+
+  animation: move infinite 0.9s ease-in-out;
+  /* animation-delay: 0.3s; */
+  /* position: absolute; */
+}
+.ball1 {
+  /* animation-delay: 0.3s; */
+}
+.ball2 {
+  animation-delay: 0.2s;
+  background-color: goldenrod;
+}
+.ball3 {
+  animation-delay: 0.4s;
+  background-color: hotpink;
+}
+.ball4 {
+  animation-delay: 0.6s;
+  background-color: green;
+}
+.ball5 {
+  animation-delay: 0.8s;
+  background-color: dodgerblue;
+}
+@keyframes move {
+  0% {
+    /* margin-left: 0; */
+    margin-top: 0;
+  }
+  50% {
+    /* margin-left: -20px; */
+    margin-top: -10px;
+  }
+  100% {
+    /* margin-left: 0; */
+    margin-top: 0;
+  }
+}

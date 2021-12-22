@@ -142,6 +142,7 @@ const MyParties = () => {
             parties.map((party) => {
               return (
                 <Box
+                  key={party.id}
                   display="flex"
                   padding="20px 10px"
                   className={classes.party}
