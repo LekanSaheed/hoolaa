@@ -13,6 +13,8 @@ import {
   where,
   query,
   addDoc,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 
 import {
@@ -63,4 +65,6 @@ export {
   uploadBytes,
   getDownloadURL,
   getDoc,
+  orderBy,
+  limit,
 };

@@ -6,14 +6,24 @@
     url(washeim/GTWalsheimPro-Regular.eot);
   font-weight: normal;
 }
+@font-face {
+  font-family: sourceSans;
+  src: url(sourceSans/SourceSansPro-Regular.ttf) format("truetype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: lato;
+  src: url(lato/Lato-Regular.ttf) format("truetype");
+  font-weight: normal;
+}
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: washeim, sans-serif;
+  font-family: lato, sans-serif;
 }
 body::placeholder {
-  font-family: washeim !important;
+  font-family: lato !important;
 }
 a {
   color: inherit;

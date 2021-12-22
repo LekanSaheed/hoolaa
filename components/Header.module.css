@@ -58,9 +58,6 @@
   .mobileMenu {
     display: none;
   }
-  .search {
-    width: auto;
-  }
 }
 @media (min-width: 1024px) {
   .header {

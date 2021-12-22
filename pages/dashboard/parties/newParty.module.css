@@ -54,6 +54,17 @@
   cursor: pointer;
   font-size: 20px;
 }
+.upload1 {
+  background-color: #8800ff;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .custom_file_input {
   display: none;
 }

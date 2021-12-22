@@ -14,6 +14,7 @@ import { useAuthState, useAuthDispatch } from "../context/AuthContext";
 export const navLinks = [
   { icon: <AiOutlineAppstore />, text: "Dashboard", link: "" },
   { icon: <AiOutlineAppstore />, text: "All Parties", link: "/all-parties" },
+  { icon: <AiOutlineAppstore />, text: "My Parties", link: "/my-parties" },
   {
     icon: <BsCupStraw />,
     text: "Reserved Parties",

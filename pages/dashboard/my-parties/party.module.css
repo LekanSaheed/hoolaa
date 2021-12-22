@@ -17,6 +17,7 @@
 }
 .menu_header {
   font-weight: 600;
+  font-size: 23px;
 }
 .username {
   font-size: 12px;
@@ -31,9 +32,27 @@
   padding: 9px;
   border-radius: 50%;
 }
+.no_menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.no_menu img {
+  width: 90%;
+  height: 300px;
+}
+
 @media (min-width: 801px) {
   .menu_header {
     font-size: 23px;
+  }
+  .no_menu {
+    flex-direction: row;
+    width: 100%;
+  }
+  .no_menu img {
+    width: 300px;
+    height: 250px;
   }
   .icon {
     font-size: 23px;
@@ -46,5 +65,10 @@
     width: 50%;
     height: 300px !important;
     border-radius: 10px !important;
+  }
+}
+@media (min-width: 1024px) {
+  .no_menu {
+    width: 70%;
   }
 }

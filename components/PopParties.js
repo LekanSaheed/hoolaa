@@ -7,7 +7,17 @@ import { ImLocation2 } from "react-icons/im";
 import { BsFillCalendar2WeekFill } from "react-icons/bs";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import { getDocs, db, collection, doc, getDoc } from "../firebase/firebase";
+import {
+  getDocs,
+  db,
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  query,
+  orderBy,
+  limit,
+} from "../firebase/firebase";
 import Image from "next/image";
 import moment from "moment";
 
@@ -80,36 +90,57 @@ const PopParties = () => {
       const myParties = [];
       const temp = [];
       const docRef = collection(db, "parties");
-      await getDocs(docRef)
-        .then((snapshot) => {
-          snapshot.forEach(async (doc_) => {
-            const data = { ...doc_.data(), id: doc_.id };
-            temp.push(data);
+      const q = query(docRef, orderBy("created_At", "desc"), limit(10));
+      onSnapshot(q, (snapshot) => {
+        snapshot.docChanges().forEach(async (change) => {
+          parties = [];
+          if (change.type === "added") {
+            const data = { ...change.doc.data(), id: change.doc.id };
+            await temp.push(data);
             await myParties.push(data);
-            // setParties(myParties);
-            console.log(myParties);
-          });
-        })
-        .then(() => {
-          temp.forEach(async (t) => {
-            const userDocRef = doc(db, "users", t.created_By);
-            await getDoc(userDocRef).then(async (adoc) => {
-              const newParty = myParties.map((p) => {
-                return {
-                  ...p,
-                  creator: adoc.data(),
-                };
-              });
-              setParties(newParty);
-              setLoading(false);
-              console.log(newParty, "Py");
-            });
-          });
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err.message);
+
+            // console.log(myParties);
+          }
+          if (change.type === "modified") {
+            const data = { ...change.doc.data(), id: change.doc.id };
+
+            let ind = temp.findIndex((t) => t.id === data.id);
+            temp[ind] = data;
+            myParties[ind] = data;
+            //  const newTemp = temp.filter((t) => t.id !== data.id);
+            // console.log(ind);
+
+            // temp = newTemp;
+            // console.log(newTemp);
+            // const newParties = myParties.filter((t) => t.id !== data.id);
+            // myParties = newParties;
+            // temp.push(data);
+            // myParties.push(data);
+            console.log("MOdified", data);
+          }
+          if (change.type === "removed") {
+            const data = { ...change.doc.data(), id: change.doc.id };
+            const newTemp = temp.filter((t) => t.id !== data.id);
+            temp = newTemp;
+            const newParties = myParties.filter((t) => t.id !== data.id);
+            myParties = newParties;
+          }
         });
+        temp.forEach(async (t) => {
+          const userDocRef = doc(db, "users", t.created_By);
+          await getDoc(userDocRef).then(async (adoc) => {
+            const newParty = myParties.map((p) => {
+              return {
+                ...p,
+                creator: adoc.data(),
+              };
+            });
+            setParties(newParty);
+            setLoading(false);
+            // console.log(newParty, "Py");
+          });
+        });
+      });
     };
     fetchParties();
   }, []);
@@ -211,19 +242,17 @@ const PopParties = () => {
           </>
         )}
         {parties.length === 0 && !loading && "No parties"}
-        {parties.map((party, id) => {
-          const d = party.start_date.toDate().toDateString();
-          console.log(d);
+        {parties.slice(0, 11).map((party, id) => {
           return (
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              animate={{
-                scale: 1,
-                opacity: 1,
-              }}
-              transition={{ duration: 0.2, delay: id - 0.9 }}
+              // initial={{ opacity: 0 }}
+              // whileInView={{ opacity: 1 }}
+              // viewport={{ once: true }}
+              // animate={{
+              //   scale: 1,
+              //   opacity: 1,
+              // }}
+              // transition={{ duration: 0.2, delay: id - 0.9 }}
               key={id}
               className={classes.party}
               onClick={() => router.push("/dashboard/parties/" + party.id)}
@@ -288,7 +317,7 @@ const PopParties = () => {
                     >
                       <ImLocation2 />
                     </i>{" "}
-                    <div className={classes.partyList}>{party.address}</div>
+                    <div className={classes.partyList}>{party.location}</div>
                   </Box>
                 </Box>
                 <Box display="flex" flexDirection="column">

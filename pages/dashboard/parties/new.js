@@ -17,7 +17,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Button, InputAdornment } from "@mui/material";
 import { TextField, makeStyles } from "@material-ui/core";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import {
   DesktopDatePicker,
   LocalizationProvider,
@@ -53,16 +53,20 @@ import {
 import { useAuthState } from "../../../context/AuthContext";
 
 import Image from "next/image";
-import { BiCategory, BiPlusCircle } from "react-icons/bi";
+import { BiCategory, BiDish, BiPlusCircle } from "react-icons/bi";
 import moment from "moment";
 import { MdAccountCircle } from "react-icons/md";
-const steps = ["Select Category", "Party details", "Review"];
 
+import states from "../../../components/state";
+import { ImLocation } from "react-icons/im";
+import { IoFastFoodOutline, IoPizzaOutline } from "react-icons/io5";
+import { GiWineBottle } from "react-icons/gi";
+import { useRouter } from "next/router";
 function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [partyName, setpartyName] = useState("");
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
   const [start_date, setStartDate] = useState(new Date());
   const [isPrivate, setIsPrivate] = useState(false);
@@ -70,7 +74,49 @@ function HorizontalLinearStepper() {
   const [currImg, setCurrentImg] = useState(null);
   const [misc, setMisc] = useState("");
   const [toggled, setToggled] = useState(false);
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [menuName, setMenuName] = useState("");
+  const [menuPrice, setMenuPrice] = useState("");
+  const [menuQuantity, setMenuQuantity] = useState("");
+  const [menus, setMenus] = useState([]);
+  const [menuCategory, setMenuCategory] = useState(null);
+  const [menuPic1, setMenuPic1] = useState(null);
+  const steps = ["Select Category", "Party details", "Review"];
+  const menuCategories = [
+    { label: "Food", value: "food", icon: <IoFastFoodOutline /> },
+    { label: "Drinks", value: "drink", icon: <GiWineBottle /> },
+    { label: "Dessert", value: "dessert", icon: <IoPizzaOutline /> },
+    { label: "Side Dishes", value: "side_dishes", icon: <BiDish /> },
+  ];
 
+  const { Option } = components;
+  const IconOption = (props) => (
+    <Option {...props}>
+      <Box display="flex" gap="10px">
+        {" "}
+        <span
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {" "}
+          {props.data.icon}
+        </span>{" "}
+        {props.data.label}
+      </Box>
+    </Option>
+  );
+  const router = useRouter();
+  const naijaStates = states.map((s) => {
+    return {
+      label: s,
+      value: s.toLowerCase(),
+    };
+  });
   const nameRef = useRef(null);
   const cards = [
     { label: "House Party", value: "house_party", icon: <GiPartyHat /> },
@@ -103,7 +149,7 @@ function HorizontalLinearStepper() {
         category: { label: category.label, value: category.value },
         start_date: myTimestamp,
         partyName,
-        location,
+        location: `${street.trim()} ${city.trim()} ${state.label}`,
         isPrivate,
         isStarted: false,
         created_At: Timestamp.fromDate(new Date()),
@@ -117,11 +163,23 @@ function HorizontalLinearStepper() {
   };
   const handleImageUpload = () => {
     const storage = getStorage();
-    const storageRef = ref(storage, "cover-images/" + cover_img.name);
+    const storageRef = ref(
+      storage,
+      "cover-images/" + cover_img.name + new Date().getTime().toString()
+    );
     const metadata = {
       contentType: "image/jpeg",
       size: cover_img.size,
     };
+    // const handleMenuImages = (img) => {
+    //   const menuImgRef = ref(storage, "menu-images/" + img.name);
+    //   const uploadTask = uploadBytes(menuImgRef, img, metadata);
+    //   uploadTask.then((snapshot) => {
+    //     getDownloadURL(menuImgRef).then((url) => {
+    //       console.log(url);
+    //     });
+    //   });
+    // };
     const uploadTask = uploadBytes(storageRef, cover_img, metadata);
 
     uploadTask.then((snapshot) => {
@@ -132,6 +190,32 @@ function HorizontalLinearStepper() {
       });
       console.log("Uploaded a blob or file!");
     });
+  };
+
+  const addMenu = (menu) => {
+    setMenus([...menus, menu]);
+  };
+
+  const increase = (id) => {
+    const update = menus.map((item) =>
+      item.id === id ? { ...item, quantity: parseInt(item.quantity) + 1 } : item
+    );
+    console.log(id);
+    setMenus(update);
+  };
+  const decrease = (id) => {
+    const update = menus.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            quantity:
+              item.quantity > 0
+                ? parseInt(item.quantity) - 1
+                : (item.quantity = 0),
+          }
+        : item
+    );
+    setMenus(update);
   };
   const handleNext = () => {
     let newSkipped = skipped;
@@ -238,11 +322,13 @@ function HorizontalLinearStepper() {
       {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+            All steps completed - Continue to Preparing reservations
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={() => router.push("/dashboard/my-parties")}>
+              Continue to Reservation
+            </Button>
           </Box>
         </React.Fragment>
       ) : (
@@ -308,8 +394,10 @@ function HorizontalLinearStepper() {
                 <Box>
                   <label className={classes.label}>Choose a category</label>
                   <Select
+                    value={category}
                     options={cards}
                     onChange={(e) => setCategory(e)}
+                    components={{ Option: IconOption }}
                     placeholder="Select category"
                   />
                 </Box>
@@ -366,25 +454,149 @@ function HorizontalLinearStepper() {
                       )}
                     />
                   </div> */}
-                  {/* <div className={classes.mobileDate}>
-                    <MobileDatePicker
-                      label="Select Start Date and time"
-                      value={start_date}
-                      onChange={(e) => setStartDate(e._d)}
-                      renderInput={(params) => (
-                        <TextField {...params} variant="outlined" />
-                      )}
-                    />
-                    <TimePicker
-                      label="Select time"
-                      renderInput={(params) => (
-                        <TextField {...params} variant="outlined" />
-                      )}
-                    />
-                  </div> */}
                 </LocalizationProvider>
+                <TextField
+                  required
+                  variant="outlined"
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
+                  placeholder="Street"
+                  fullWidth
+                  size="small"
+                />
+                <TextField
+                  required
+                  variant="outlined"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder="City"
+                  fullWidth
+                  size="small"
+                />
+                <Select
+                  options={naijaStates}
+                  value={state}
+                  onChange={(e) => setState(e)}
+                />
               </Box>
             ) : (
+              // ) : activeStep === 2 ? (
+              //   <Box>
+              //     <label className={classes.label}>Prepare Reservations</label>
+
+              //     <Box display="flex" flexDirection="column" gap="10px">
+              //       <Box>
+              //         <label className={classes.label}>Choose Img</label>
+              //         <label className={classes.upload1} htmlFor="upload_menu">
+              //           <input
+              //             className={classes.custom_file_input}
+              //             type="file"
+              //             id="upload_menu"
+              //           />
+              //           <BiPlusCircle />
+              //         </label>
+              //       </Box>
+
+              //       <Box>
+              //         <label className={classes.label}>Name</label>
+              //         <TextField
+              //           placeholder="Item Name"
+              //           variant="outlined"
+              //           size="small"
+              //           value={menuName}
+              //           fullWidth
+              //           onChange={(e) => setMenuName(e.target.value)}
+              //         />
+              //       </Box>
+              //       <Box>
+              //         <label className={classes.label}>Category</label>
+              //         <Select
+              //           options={menuCategories}
+              //           value={menuCategory}
+              //           placeholder="Select Category"
+              //           onChange={(e) => setMenuCategory(e)}
+              //           components={{ Option: IconOption }}
+              //         />
+              //       </Box>
+              //       <Box>
+              //         <label className={classes.label}>Price</label>
+              //         <TextField
+              //           type="number"
+              //           placeholder="$"
+              //           variant="outlined"
+              //           size="small"
+              //           value={menuPrice}
+              //           onChange={(e) => setMenuPrice(e.target.value)}
+              //         />
+              //       </Box>
+              //       {/* <Box>
+              //         <label className={classes.label}>Quantity</label>
+              //         <TextField
+              //           type="number"
+              //           placeholder="quantity"
+              //           variant="outlined"
+              //           size="small"
+              //           value={menuQuantity}
+              //           onChange={(e) => setMenuQuantity(e.target.value)}
+              //         />
+              //       </Box> */}
+              //       <Button
+              //         disabled={!menuName || !menuPrice || !menuQuantity}
+              //         variant="contained"
+              //         color="primary"
+              //         style={{
+              //           background:
+              //             !menuName || !menuPrice || !menuQuantity
+              //               ? "#efefef"
+              //               : "#8800ff",
+              //         }}
+              //         onClick={() =>
+              //           addMenu({
+              //             name: menuName,
+              //             price: menuPrice,
+              //             // quantity: menuQuantity,
+              //             id: new Date().getTime().toString(),
+              //           })
+              //         }
+              //       >
+              //         Add
+              //       </Button>
+              //     </Box>
+
+              //     <Box>
+              //       {menus.length > 0 &&
+              //         menus.map((m) => {
+              //           return (
+              //             <motion.div
+              //               initial={{ opacity: 0 }}
+              //               animate={{ opacity: 1 }}
+              //               transition={{ duration: 0.2 }}
+              //               style={{ display: "flex", gap: "10px" }}
+              //             >
+              //               <span>{m.name}</span>
+              //               <span>{`$${m.price}`}</span>
+              //               <span>{m.quantity}</span>
+
+              //               {/* <button onClick={() => increase(m.id)}>
+              //                 Increase
+              //               </button>
+              //               <button onClick={() => decrease(m.id)}>
+              //                 decrease
+              //               </button> */}
+              //               <button
+              //                 onClick={() => {
+              //                   setMenus(menus.filter((mn) => mn.id !== m.id));
+              //                 }}
+              //               >
+              //                 remove
+              //               </button>
+              //             </motion.div>
+              //           );
+              //         })}
+              //     </Box>
+              //   </Box>
+              // ) : (
+
               <Box>
                 <div
                   style={{
@@ -427,6 +639,15 @@ function HorizontalLinearStepper() {
                     <span className={classes.reviewText}>
                       {" "}
                       {moment(start_date).format("ddd, MMM DD YYYY hh:mm a")}
+                    </span>
+                  </Box>
+                  <Box display="flex" alignItems="center" gap="10px">
+                    {" "}
+                    <span className={classes.reviewIcon}>
+                      <ImLocation />
+                    </span>
+                    <span className={classes.reviewText}>
+                      {`${street.trim()} ${city.trim()} ${state.value}`}
                     </span>
                   </Box>
                 </Box>
