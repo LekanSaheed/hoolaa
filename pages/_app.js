@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { AuthProvider } from "../context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 function MyApp({ Component, pageProps }) {
   const [state, dispatch] = useReducer(reducer, defaultState);
   const toggleNav = () => {
@@ -16,15 +17,18 @@ function MyApp({ Component, pageProps }) {
   const toggleMobile = () => {
     dispatch({ type: "TOGGLE_MOBILE" });
   };
+  const router = useRouter();
   const protectedRoutes = [
     "/dashboard",
     "/dashboard/parties",
-    "/dashboard/all-employee",
+    "/dashboard/all-parties",
     "/dashboard/profile",
-    "/payroll/transaction-history",
-    "/payroll/pay-run",
-    "/payroll/pay-run/add-new",
-    "/payroll/topup",
+    "/dashboard/parties",
+    "/dashboard/my-parties/" + router.query.partyId,
+    "/dashboard/my-parties/" + router.query.partyId + "/add-menu",
+    "/dashboard/settings",
+    "/dashboard/notifications",
+    "/dashboard/parties/" + router.query.partyId,
   ];
   return (
     <AppContext.Provider value={{ ...state, toggleNav, toggleMobile }}>

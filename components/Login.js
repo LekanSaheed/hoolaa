@@ -42,6 +42,7 @@ const Login = () => {
 
             dispatch("LOGIN", { user: _user, profile: doc_.data() });
             router.push("/dashboard");
+            toast.success("Logged in successfully");
             dispatch("STOP_LOADING");
           });
         } else if (_user && _user.emailVerified === false) {
@@ -58,7 +59,11 @@ const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        toast.error(error.message);
         console.log(error);
+      })
+      .catch((err) => {
+        toast.error(err.message);
       });
   };
   return (

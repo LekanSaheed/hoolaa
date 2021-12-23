@@ -78,12 +78,9 @@ function HorizontalLinearStepper() {
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [menuName, setMenuName] = useState("");
-  const [menuPrice, setMenuPrice] = useState("");
-  const [menuQuantity, setMenuQuantity] = useState("");
+
   const [menus, setMenus] = useState([]);
-  const [menuCategory, setMenuCategory] = useState(null);
-  const [menuPic1, setMenuPic1] = useState(null);
+
   const steps = ["Select Category", "Party details", "Review"];
   const [loading, setLoading] = useState(false);
   const menuCategories = [
@@ -137,9 +134,9 @@ function HorizontalLinearStepper() {
   const handleImgChange = (e) => {
     const img = e.target.files[0];
     setCurrentImg(URL.createObjectURL(img));
-    console.log(currImg);
+    // console.log(currImg);
     setCoverImg(img);
-    console.log(img);
+    // console.log(img);
   };
 
   const createParty = (url) => {

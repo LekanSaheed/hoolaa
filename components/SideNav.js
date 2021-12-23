@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./SideNav.module.css";
-import { Avatar } from "@mui/material";
+import { Avatar, Skeleton } from "@mui/material";
 import { FiPlusCircle } from "react-icons/fi";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { AiOutlineSetting } from "react-icons/ai";
@@ -48,20 +48,56 @@ const SideNav = () => {
         }`}
       >
         {!isToggled ? (
-          <Avatar sx={{ width: 70, height: 70 }}>L</Avatar>
+          user && user.profile !== undefined ? (
+            <Avatar
+              src={
+                user.profile !== undefined &&
+                user.profile.displayPics !== undefined
+                  ? user.profile.displayPics
+                  : ""
+              }
+              sx={{ width: 70, height: 70 }}
+            >
+              {!user.profile.displayPics &&
+                user.profile.username.slice(0, 1).toUpperCase()}
+            </Avatar>
+          ) : (
+            <Skeleton variant="circular" width={70} height={70} />
+          )
+        ) : user && user.profile !== undefined ? (
+          <Avatar
+            src={
+              user &&
+              user.profile !== undefined &&
+              user.profile.displayPics !== undefined
+                ? user.profile.displayPics
+                : ""
+            }
+            sx={{ width: 40, height: 40 }}
+          >
+            {user &&
+              !user.profile.displayPics &&
+              user.profile.username.slice(0, 1).toUpperCase()}
+          </Avatar>
         ) : (
-          <Avatar sx={{ width: 40, height: 40 }}>L</Avatar>
+          <Skeleton variant="circular" width={40} height={40} />
         )}
       </div>
       {!isToggled && (
         <div className={classes.side_group}>
           <span>
-            {user.profile !== undefined ? user.profile.firstName : "loading"}
+            {user && user.profile !== undefined ? (
+              user.profile.firstName
+            ) : (
+              <Skeleton width={Math.floor(Math.random() * 70) + 50} />
+            )}
           </span>
           <span style={{ color: "#bababa" }}>
-            {user.profile !== undefined
-              ? "@" + user.profile.username
-              : "loading"}
+            {user && user.profile !== undefined ? (
+              "@" + user.profile.username
+            ) : (
+              <Skeleton width={Math.floor(Math.random() * 70) + 50} />
+            )}
           </span>
           <span>Party Buddies</span>
         </div>
@@ -98,7 +134,14 @@ const SideNav = () => {
           );
         })}
       </div>
-      <div onClick={() => dispatch("LOGOUT")}>Logout</div>
+      <div
+        onClick={() => {
+          dispatch("LOGOUT");
+          router.push("/login");
+        }}
+      >
+        Logout
+      </div>
     </motion.nav>
   );
 };

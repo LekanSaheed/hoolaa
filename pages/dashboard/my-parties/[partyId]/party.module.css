@@ -1,19 +1,16 @@
 .cover_img {
   width: 100%;
   height: 200px;
-  border-radius: 6px;
+  border-radius: 15px;
   border: solid 2px #efefef;
+}
+.img_con {
+  padding: 20px;
+  background-color: white;
 }
 .partyGroup {
   display: flex;
   flex-direction: column;
-}
-.party_name {
-  font-weight: 600;
-}
-.menuContainer {
-  padding: 10px;
-  padding-top: 20px;
 }
 .party_name {
   font-weight: 600;
@@ -72,21 +69,8 @@
 }
 .detail_flex {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   flex-direction: column;
-}
-.notFound {
-  width: 100%;
-  font-weight: 700;
-  font-size: 17px;
-  color: grey;
-}
-.q_input {
-  width: 25px;
-}
-.notFound img {
-  width: 100%;
-  height: auto;
 }
 .menu_details {
   width: 100%;
@@ -136,12 +120,8 @@
   color: white;
 }
 .vip {
-  background-color: dodgerblue;
+  background-color: orangered;
   color: white;
-}
-._container {
-  max-height: 300px;
-  overflow-y: auto;
 }
 .icon {
   display: flex;
@@ -177,23 +157,6 @@
   width: 90%;
   height: 300px;
 }
-
-.menu_header {
-  font-weight: 600;
-}
-.username {
-  font-size: 12px;
-}
-.icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 23px;
-  color: rgb(108, 108, 108);
-  background-color: #efefef;
-  padding: 9px;
-  border-radius: 50%;
-}
 .float_btn {
   position: fixed !important;
   bottom: 0px;
@@ -203,11 +166,15 @@
   padding: 10px;
 }
 @media (min-width: 801px) {
-  .q_input {
-    width: 50px;
-  }
   .menu_header {
     font-size: 23px;
+  }
+  .no_menu {
+    width: 100%;
+  }
+  .no_menu img {
+    width: 300px;
+    height: 250px;
   }
   .icon {
     font-size: 23px;
@@ -217,7 +184,6 @@
     flex-direction: row;
   }
   .cover_img {
-    width: 50%;
     height: 300px !important;
     border-radius: 10px !important;
   }
@@ -225,12 +191,10 @@
     position: static !important;
   }
 }
-@media (min-width: 1024px) {
-  .reserved {
-    position: fixed;
-    bottom: 0;
 
-    right: 0;
+@media (min-width: 1024px) {
+  .img_con {
+    width: 100%;
   }
   .flex_list {
     flex-direction: row;
@@ -238,5 +202,8 @@
   }
   .menuContainer {
     width: 60%;
+  }
+  .no_menu {
+    width: 100%;
   }
 }

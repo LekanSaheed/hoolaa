@@ -114,6 +114,7 @@ export const AuthProvider = ({ children }) => {
           localStorage.removeItem("uid");
           dispatch("STOP_LOADING");
           console.log("No user");
+          router.push("/login");
         }
       });
     };

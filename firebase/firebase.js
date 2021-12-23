@@ -15,6 +15,8 @@ import {
   addDoc,
   orderBy,
   limit,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 
 import {
@@ -67,4 +69,6 @@ export {
   getDoc,
   orderBy,
   limit,
+  updateDoc,
+  arrayUnion,
 };

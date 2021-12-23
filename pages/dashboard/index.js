@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import PopParties from "../../components/PopParties";
 import Wrapper from "../../components/Wrapper";
@@ -22,8 +23,12 @@ const Dashboard = () => {
     });
   };
   const { user, authenticated } = useAuthState();
+  const router = useRouter();
   useEffect(() => {
     console.log(user);
+    if (!authenticated) {
+      router.push("/login");
+    }
   }, [user]);
   return (
     <div>
