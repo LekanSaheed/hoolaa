@@ -213,6 +213,7 @@ const Party = () => {
                       {categories.map((cg) => {
                         return (
                           <div
+                            key={cg.id}
                             className={
                               current === cg.params ? classes.active : ""
                             }
@@ -452,6 +453,7 @@ const Party = () => {
                     reserved.map((r) => {
                       return (
                         <motion.div
+                          key={r.id}
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
