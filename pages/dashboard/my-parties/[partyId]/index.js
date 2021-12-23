@@ -229,6 +229,7 @@ const Party = () => {
                       {categories.map((cg) => {
                         return (
                           <div
+                            key={cg.id}
                             className={
                               current === cg.params ? classes.active : ""
                             }
