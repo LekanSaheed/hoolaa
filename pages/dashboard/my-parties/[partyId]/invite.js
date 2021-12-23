@@ -8,7 +8,7 @@ import Wrapper from "../../../../components/Wrapper";
 import { useAuthState } from "../../../../context/AuthContext";
 import { doc, db, getDoc } from "../../../../firebase/firebase";
 
-const invite = () => {
+const Invite = () => {
   const { user } = useAuthState();
   const router = useRouter();
   const [code, setCode] = React.useState("");
@@ -142,4 +142,4 @@ const invite = () => {
   );
 };
 
-export default invite;
+export default Invite;
