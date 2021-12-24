@@ -10,6 +10,7 @@ import {
   signOut,
   sendEmailVerification,
 } from "../firebase/firebase";
+import { useGlobalContext } from "./context";
 const StateContext = createContext({
   authenticated: false,
   user: null,
@@ -66,6 +67,7 @@ const reducer = (state, { type, payload }) => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const { toggleTheme } = useGlobalContext();
   const router = useRouter();
   const [state, defaultDispatch] = useReducer(reducer, {
     user: null,
@@ -75,6 +77,27 @@ export const AuthProvider = ({ children }) => {
   const dispatch = (type, payload) => defaultDispatch({ type, payload });
 
   useEffect(() => {
+    if (window.matchMedia) {
+      // Check if the dark-mode Media-Query matches
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        console.log("Dark");
+
+        // Dark
+      } else {
+        // Light
+        console.log("Light");
+        toggleTheme();
+      }
+    } else {
+      // Default (when Media-Queries are not supported)
+    }
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const isDark = e.matches ? true : false;
+        !isDark && toggleTheme();
+        console.log(isDark);
+      });
     const fetchUser = async () => {
       dispatch("LOADING");
 

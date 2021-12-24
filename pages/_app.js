@@ -9,6 +9,7 @@ import { AuthProvider } from "../context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./app.module.css";
+
 function MyApp({ Component, pageProps }) {
   const [state, dispatch] = useReducer(reducer, defaultState);
   const toggleNav = () => {
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }) {
   const toggleTheme = () => {
     dispatch({ type: "TOGGLE_THEME" });
   };
+
   const router = useRouter();
   const protectedRoutes = [
     "/dashboard",
