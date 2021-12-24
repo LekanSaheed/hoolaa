@@ -1,6 +1,10 @@
 .main {
   min-height: 100vh;
 }
+.dark {
+  background-color: #242526 !important;
+  color: white !important;
+}
 @media (min-width: 801px) {
   .main {
     width: 100%;

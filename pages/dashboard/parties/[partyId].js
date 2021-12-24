@@ -25,6 +25,7 @@ import { MdCategory } from "react-icons/md";
 import { BsCalendarWeek, BsCalendarWeekFill, BsStarFill } from "react-icons/bs";
 import { RiVipCrown2Fill, RiVipDiamondFill } from "react-icons/ri";
 import { toast } from "react-toastify";
+import { useGlobalContext } from "../../../context/context";
 const Party = () => {
   const [party, setParty] = useState({});
   const [loading, setLoading] = useState(true);
@@ -33,7 +34,7 @@ const Party = () => {
   const [search, setSearch] = useState("");
   const [notFound, setNotFound] = useState(false);
   const [reserved, setReserved] = useState([]);
-
+  const { isToggled, darkMode } = useGlobalContext();
   const router = useRouter();
   React.useEffect(() => {
     setCurrent("all");
@@ -120,7 +121,10 @@ const Party = () => {
   };
   return (
     <Wrapper>
-      <Box padding="10px" backgroundColor="#fcfcfc">
+      <Box
+        padding="10px"
+        className={`${classes.container} ${darkMode ? classes.darkCont : ""}`}
+      >
         {notFound && (
           <div className={classes.notFound}>
             <Box padding="10px" textAlign="center">
@@ -143,6 +147,9 @@ const Party = () => {
                 gap="10px"
                 display="flex"
                 flexDirection="column"
+                className={`${classes.party_details} ${
+                  darkMode ? classes.dark_party_details : ""
+                }`}
               >
                 <Box display="flex" gap="10px">
                   <Avatar
@@ -175,7 +182,10 @@ const Party = () => {
                   <span className={classes.icon}>
                     <MdCategory />
                   </span>
-                  <span style={{ fontWeight: "600" }}>
+                  <span
+                    className={classes.details}
+                    style={{ fontWeight: "600" }}
+                  >
                     {" "}
                     {party.category.label}
                   </span>
@@ -185,17 +195,22 @@ const Party = () => {
                   <span className={classes.icon}>
                     <BsCalendarWeekFill />
                   </span>
-                  <span style={{ fontWeight: "600" }}>
+                  <span
+                    className={classes.details}
+                    style={{ fontWeight: "600" }}
+                  >
                     {moment(party.start_date.toDate()).format(
                       "ddd, MMM DD YYYY hh:mm:a"
                     )}
                   </span>
                 </Box>
                 <Box display="flex" alignItems="center" gap="10px">
-                  <span className={classes.icon}>
+                  <span className={classes.details} className={classes.icon}>
                     <HiLocationMarker />
                   </span>
-                  <span style={{ fontWeight: "600" }}>{party.location}</span>
+                  <span
+                    style={{ fontWeight: "600" }}
+                  >{`${party.location.street}, ${party.location.city} ${party.location.state}`}</span>
                 </Box>
               </Box>
             </div>
@@ -209,7 +224,11 @@ const Party = () => {
                 </span>
                 {party.menus && (
                   <>
-                    <div className={classes.cat_flex}>
+                    <div
+                      className={`${classes.cat_flex} ${
+                        darkMode ? classes.darkCatFlex : ""
+                      }`}
+                    >
                       {categories.map((cg) => {
                         return (
                           <div
@@ -251,7 +270,11 @@ const Party = () => {
                   </>
                 )}
                 {party.menus && party.menus.length > 0 && menus.length > 0 ? (
-                  <div className={classes._container}>
+                  <div
+                    className={`${classes._container} ${
+                      darkMode ? classes.darkContainer : ""
+                    }`}
+                  >
                     {menus.map((menu) => {
                       return (
                         <div className={classes.menu} key={menu.id}>

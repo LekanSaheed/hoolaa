@@ -5,6 +5,7 @@ import classes from "./MobileNav.module.css";
 import { navLinks } from "./SideNav";
 import { useRouter } from "next/router";
 import { MdClose } from "react-icons/md";
+
 const itemVariants = {
   closed: {
     opacity: 0,
@@ -29,12 +30,16 @@ const sideVariants = {
 const links = [...navLinks, { text: "Create Party", link: "/parties/new" }];
 const MobileNav = () => {
   const router = useRouter();
-  const { isToggleMobile, toggleMobile } = useGlobalContext();
+  const { isToggleMobile, toggleMobile, toggleTheme, darkMode } =
+    useGlobalContext();
   return (
     <main>
       <AnimatePresence>
         {isToggleMobile && (
           <motion.div className={classes.backgroundCont}>
+            <button onClick={() => toggleTheme()}>
+              {darkMode ? "dark" : "light"}
+            </button>
             <motion.aside
               initial={{ width: 0 }}
               animate={{
@@ -47,7 +52,9 @@ const MobileNav = () => {
               }}
             >
               <motion.div
-                className={classes.container}
+                className={`${classes.container} ${
+                  darkMode ? classes.darkContainer : classes.lightContainer
+                }`}
                 initial="closed"
                 animate="open"
                 exit="closed"

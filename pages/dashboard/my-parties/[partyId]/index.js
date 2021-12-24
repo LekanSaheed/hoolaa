@@ -192,7 +192,9 @@ const Party = () => {
                   <span className={`${classes.icon} ${classes.icon4}`}>
                     <HiLocationMarker />
                   </span>
-                  <span style={{ fontWeight: "600" }}>{party.location}</span>
+                  <span
+                    style={{ fontWeight: "600" }}
+                  >{`${party.location.street}, ${party.location.city} ${party.location.state}`}</span>
                 </Box>
                 <Button variant="outlined">Edit</Button>
               </Box>

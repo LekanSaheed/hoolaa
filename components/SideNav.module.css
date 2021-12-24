@@ -8,6 +8,10 @@
   flex-direction: column;
   align-items: center;
 }
+.darkNav {
+  background-color: #373737ff !important;
+  color: #fff;
+}
 .avatar {
   padding: 10px;
 }

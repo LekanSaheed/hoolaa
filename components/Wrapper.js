@@ -5,7 +5,7 @@ import classes from "./Wrapper.module.css";
 import { useGlobalContext } from "../context/context";
 import MobileNav from "./MobileNav";
 const Wrapper = ({ children }) => {
-  const { isToggled } = useGlobalContext();
+  const { isToggled, darkMode } = useGlobalContext();
   return (
     <div className={classes.container}>
       <SideNav />
@@ -13,7 +13,7 @@ const Wrapper = ({ children }) => {
       <main
         className={`${classes.main} ${
           isToggled ? classes.shrinkMain : classes.showMain
-        }`}
+        } ${darkMode ? classes.dark : classes.light}`}
       >
         <Header />
         {children}

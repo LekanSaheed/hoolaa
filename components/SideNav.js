@@ -15,6 +15,7 @@ export const navLinks = [
   { icon: <AiOutlineAppstore />, text: "Dashboard", link: "" },
   { icon: <AiOutlineAppstore />, text: "All Parties", link: "/all-parties" },
   { icon: <AiOutlineAppstore />, text: "My Parties", link: "/my-parties" },
+  { icon: <AiOutlineAppstore />, text: "Profile", link: "/profile" },
   {
     icon: <BsCupStraw />,
     text: "Reserved Parties",
@@ -28,7 +29,7 @@ const SideNav = () => {
   const router = useRouter();
   const dispatch = useAuthDispatch();
   const { user } = useAuthState();
-  const { isToggled } = useGlobalContext();
+  const { isToggled, darkMode } = useGlobalContext();
   const variants = {
     open: { opacity: 1, x: 0 },
     closed: { opacity: 0, x: "-100%" },
@@ -39,7 +40,8 @@ const SideNav = () => {
       animate={isToggled && "open"}
       className={`${classes.sideNav} ${
         isToggled ? classes.shrinkNav : classes.showNav
-      }`}
+      }
+      ${darkMode ? classes.darkNav : ""}`}
     >
       <span> Hoolaa</span>
       <div

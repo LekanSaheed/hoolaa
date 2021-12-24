@@ -11,4 +11,10 @@ export const reducer = (state, action) => {
       isToggleMobile: !state.isToggleMobile,
     };
   }
+  if (action.type === "TOGGLE_THEME") {
+    return {
+      ...state,
+      darkMode: !state.darkMode,
+    };
+  }
 };

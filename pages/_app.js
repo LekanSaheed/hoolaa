@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { AuthProvider } from "../context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import classes from "./app.module.css";
 function MyApp({ Component, pageProps }) {
   const [state, dispatch] = useReducer(reducer, defaultState);
   const toggleNav = () => {
@@ -16,6 +16,9 @@ function MyApp({ Component, pageProps }) {
   };
   const toggleMobile = () => {
     dispatch({ type: "TOGGLE_MOBILE" });
+  };
+  const toggleTheme = () => {
+    dispatch({ type: "TOGGLE_THEME" });
   };
   const router = useRouter();
   const protectedRoutes = [
@@ -31,11 +34,16 @@ function MyApp({ Component, pageProps }) {
     "/dashboard/parties/" + router.query.partyId,
   ];
   return (
-    <AppContext.Provider value={{ ...state, toggleNav, toggleMobile }}>
+    <AppContext.Provider
+      value={{ ...state, toggleNav, toggleMobile, toggleTheme }}
+    >
       <AuthProvider>
         <PrivateRoute protectedRoutes={protectedRoutes}>
           <ToastContainer autoClose={3000} />
-          <Component {...pageProps} />
+          <Component
+            className={state.darkMode ? classes.darkBody : classes.light}
+            {...pageProps}
+          />
         </PrivateRoute>
       </AuthProvider>
     </AppContext.Provider>

@@ -8,9 +8,11 @@ import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { Avatar } from "@mui/material";
 import { useGlobalContext } from "../context/context";
 const Header = () => {
-  const { toggleNav, toggleMobile } = useGlobalContext();
+  const { toggleNav, toggleMobile, darkMode } = useGlobalContext();
   return (
-    <div className={classes.header}>
+    <div
+      className={`${classes.header} ${darkMode ? classes.dark : classes.light}`}
+    >
       <span
         className={`${classes.menu} ${classes.lgMenu}`}
         onClick={() => toggleNav()}

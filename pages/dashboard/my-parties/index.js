@@ -146,7 +146,12 @@ const MyParties = () => {
                   display="flex"
                   padding="20px 10px"
                   className={classes.party}
-                  onClick={() => router.push(`${router.pathname}/${party.id}`)}
+                  onClick={() =>
+                    router.push({
+                      pathname: router.pathname + "/" + party.id,
+                      query: { ...router.query },
+                    })
+                  }
                 >
                   <Box
                     width="40%"

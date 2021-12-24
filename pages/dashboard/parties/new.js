@@ -15,7 +15,15 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Button, InputAdornment } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  InputAdornment,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import { TextField, makeStyles } from "@material-ui/core";
 import Select, { components } from "react-select";
 import {
@@ -70,7 +78,7 @@ function HorizontalLinearStepper() {
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
   const [start_date, setStartDate] = useState(new Date());
-  const [isPrivate, setIsPrivate] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(null);
   const [cover_img, setCoverImg] = useState(null);
   const [currImg, setCurrentImg] = useState(null);
   const [misc, setMisc] = useState("");
@@ -129,6 +137,9 @@ function HorizontalLinearStepper() {
       icon: <GiJesterHat />,
     },
     { label: "Beach Party", value: "beach_party", icon: <GiPartyFlags /> },
+    { label: "Festival", value: "festival", icon: <GiPartyFlags /> },
+    { label: "Concert", value: "concert", icon: <GiPartyFlags /> },
+    { label: "Re-Union", value: "reunion", icon: <GiPartyFlags /> },
   ];
 
   const handleImgChange = (e) => {
@@ -140,6 +151,18 @@ function HorizontalLinearStepper() {
   };
 
   const createParty = (url) => {
+    function makeid(length) {
+      var result = "";
+      var characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
+    }
     const docRef = collection(db, "parties");
     addDoc(
       docRef,
@@ -148,11 +171,16 @@ function HorizontalLinearStepper() {
         category: { label: category.label, value: category.value },
         start_date: myTimestamp,
         partyName,
-        location: `${street.trim()} ${city.trim()} ${state.label}`,
+        location: {
+          street: street.trim(),
+          city: city.trim(),
+          state: state.label,
+        },
         isPrivate,
         isStarted: false,
         created_At: Timestamp.fromDate(new Date()),
         created_By: user.user.uid,
+        code: [{ type: "party_code", code: makeid(7) }],
       },
       { merge: true }
     )
@@ -199,31 +227,6 @@ function HorizontalLinearStepper() {
     });
   };
 
-  const addMenu = (menu) => {
-    setMenus([...menus, menu]);
-  };
-
-  const increase = (id) => {
-    const update = menus.map((item) =>
-      item.id === id ? { ...item, quantity: parseInt(item.quantity) + 1 } : item
-    );
-    console.log(id);
-    setMenus(update);
-  };
-  const decrease = (id) => {
-    const update = menus.map((item) =>
-      item.id === id
-        ? {
-            ...item,
-            quantity:
-              item.quantity > 0
-                ? parseInt(item.quantity) - 1
-                : (item.quantity = 0),
-          }
-        : item
-    );
-    setMenus(update);
-  };
   const handleNext = () => {
     let newSkipped = skipped;
 
@@ -301,7 +304,10 @@ function HorizontalLinearStepper() {
   var myTimestamp = Timestamp.fromDate(start_date);
   console.log(category);
   const { user } = useAuthState();
-
+  const handleChange = (e) => {
+    setIsPrivate(e.target.value);
+  };
+  console.log(isPrivate);
   return (
     <Box
       backgroundColor="#fff"
@@ -438,6 +444,27 @@ function HorizontalLinearStepper() {
                     );
                   })}
                 </div> */}
+                <br />
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Type</FormLabel>
+                  <RadioGroup
+                    aria-label="gender"
+                    name="controlled-radio-buttons-group"
+                    value={isPrivate}
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel
+                      value={true}
+                      control={<Radio />}
+                      label="Private"
+                    />
+                    <FormControlLabel
+                      value={false}
+                      control={<Radio />}
+                      label="Public"
+                    />
+                  </RadioGroup>
+                </FormControl>
               </Box>
             ) : activeStep === 1 ? (
               <Box>
@@ -683,7 +710,9 @@ function HorizontalLinearStepper() {
             <Box sx={{ flex: "1 1 auto" }} />
 
             <Button
-              disabled={!category}
+              disabled={
+                !category || isPrivate === null || !partyName || !cover_img
+              }
               variant={activeStep === 2 ? "contained" : "outlined"}
               onClick={
                 activeStep === steps.length - 1 ? handleImageUpload : handleNext

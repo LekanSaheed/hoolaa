@@ -1,7 +1,7 @@
 .cover_img {
   width: 100%;
   height: 200px;
-  border-radius: 6px;
+  border-radius: 15px;
   border: solid 2px #efefef;
 }
 .partyGroup {
@@ -10,14 +10,13 @@
 }
 .party_name {
   font-weight: 600;
+  font-size: 16px;
 }
 .menuContainer {
   padding: 10px;
   padding-top: 20px;
 }
-.party_name {
-  font-weight: 600;
-}
+
 .menuContainer {
   padding: 10px;
   padding-top: 20px;
@@ -143,6 +142,22 @@
   max-height: 300px;
   overflow-y: auto;
 }
+.container {
+  background-color: #fcfcfc;
+  padding: 16px !important;
+}
+.darkCont {
+  background-color: #242526;
+}
+.party_details {
+  background-color: #fff;
+  border-radius: 10px;
+  width: auto;
+  font-size: 13px;
+}
+.dark_party_details {
+  background-color: #373737ff;
+}
 .icon {
   display: flex;
   align-items: center;
@@ -202,6 +217,69 @@
   right: 0;
   padding: 10px;
 }
+.cat_flex::-webkit-scrollbar,
+._container::-webkit-scrollbar {
+  background-color: #fff;
+}
+
+.cat_flex::-webkit-scrollbar-thumb,
+._container::-webkit-scrollbar-thumb {
+  background-color: #8800ff;
+  border-radius: 50px;
+
+  border: solid 7px #fff;
+  background-clip: padding-box;
+}
+.cat_flex::-webkit-scrollbar-corner,
+._container::-webkit-scrollbar-corner {
+  border-radius: 10px;
+}
+.darkCatFlex::-webkit-scrollbar,
+.darkContainer::-webkit-scrollbar {
+  background-color: transparent !important;
+}
+
+.darkCatFlex::-webkit-scrollbar-thumb,
+.darkContainer::-webkit-scrollbar-thumb {
+  background-color: #8800ff55;
+  border-radius: 50px;
+  box-shadow: 0 0 10px rgba(0 0 0 /17%);
+  border: solid 6px #242526;
+  background-clip: padding-box;
+  animation: fade 0.7s;
+  transition: 0.4s;
+}
+.darkCatFlex::-webkit-scrollbar-corner,
+.darkContainer::-webkit-scrollbar-corner {
+  border-radius: 10px;
+}
+
+@media (min-width: 350px) and (max-width: 450px) {
+  .cover_img {
+    height: 250px;
+  }
+}
+@media (min-width: 450px) and (max-width: 500px) {
+  .cover_img {
+    height: 280px;
+  }
+}
+@media (min-width: 501px) and (max-width: 602px) {
+  .cover_img {
+    height: 320px;
+  }
+}
+
+@media (min-width: 602px) and (max-width: 702px) {
+  .cover_img {
+    height: 350px;
+  }
+}
+@media (min-width: 702px) and (max-width: 800px) {
+  .cover_img {
+    height: 400px;
+  }
+}
 @media (min-width: 801px) {
   .q_input {
     width: 50px;
@@ -213,16 +291,24 @@
     font-size: 23px;
     padding: 10px;
   }
-  .partyGroup {
-    flex-direction: row;
+
+  .float_btn {
+    position: static !important;
   }
+  .cover_img {
+    height: 350px !important;
+  }
+}
+@media (min-width: 901px) {
   .cover_img {
     width: 50%;
     height: 300px !important;
-    border-radius: 10px !important;
   }
-  .float_btn {
-    position: static !important;
+  .partyGroup {
+    flex-direction: row;
+  }
+  .party_details {
+    width: 50%;
   }
 }
 @media (min-width: 1024px) {
