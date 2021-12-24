@@ -205,7 +205,7 @@ const Party = () => {
                   </span>
                 </Box>
                 <Box display="flex" alignItems="center" gap="10px">
-                  <span className={classes.details} className={classes.icon}>
+                  <span className={classes.icon}>
                     <HiLocationMarker />
                   </span>
                   <span
