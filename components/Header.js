@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { db, getDocs, collection } from "../firebase/firebase";
 import { motion } from "framer-motion";
 import SearchPanel from "./SearchPanel";
+import { useAuthState } from "../context/AuthContext";
 const Header = () => {
   const { toggleNav, toggleMobile, darkMode, search, setSearch, isToggled } =
     useGlobalContext();
@@ -23,6 +24,7 @@ const Header = () => {
 
   const [loading, setLoading] = React.useState(true);
   const router = useRouter();
+  const { user } = useAuthState();
   React.useEffect(() => {
     setSearch("");
     const fetchUsers = async () => {
@@ -143,7 +145,14 @@ const Header = () => {
           </Link>
 
           <div className={classes.noMobile}>
-            <Avatar sx={{ width: 30, height: 30 }}>L</Avatar>
+            <Avatar
+              src={user.profile ? user.profile.displayPics : ""}
+              sx={{ width: 30, height: 30 }}
+            >
+              {!user.profile.displayPics &&
+                user.profile &&
+                user.profile.username.slice(0, 1).toUpperCase()}
+            </Avatar>
           </div>
         </div>
       </div>

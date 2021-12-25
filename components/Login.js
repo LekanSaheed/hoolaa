@@ -152,7 +152,21 @@ const Login = () => {
             fontWeight: "600",
           }}
           size="small"
-          onClick={login}
+          onClick={(e) => {
+            if (email === "" && password === "") {
+              toast.error("Please input Email and password");
+            } else if (email === "") {
+              toast.error("Please input an email");
+            } else if (password === "") {
+              toast.error("Please your password");
+            } else if (password.length <= 8) {
+              toast.error("Password cannot be less than 8 characters");
+            } else if (!email.includes("@")) {
+              toast.error("Email not valid");
+            } else {
+              login(e);
+            }
+          }}
         >
           Sign In
         </Button>
