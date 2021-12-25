@@ -149,8 +149,8 @@ const Header = () => {
               src={user.profile ? user.profile.displayPics : ""}
               sx={{ width: 30, height: 30 }}
             >
-              {!user.profile.displayPics &&
-                user.profile &&
+              {user.profile &&
+                !user.profile.displayPics &&
                 user.profile.username.slice(0, 1).toUpperCase()}
             </Avatar>
           </div>
