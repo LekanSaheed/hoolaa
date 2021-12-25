@@ -30,8 +30,7 @@ function MyApp({ Component, pageProps }) {
   const setSearch = (q) => {
     dispatch({ type: "SET_SEARCH", payload: q });
   };
-  const toasts = useToastContainer;
-  console.log(useToastContainer);
+
   // const limit = 2;
   // useEffect(() => {
   //   toasts

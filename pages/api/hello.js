@@ -32,7 +32,10 @@ if (!admin.apps.length) {
 // });
 
 export default function handler(req, res) {
-  if (req.headers.authorization === "lekansaheed@prodeveloperforlife") {
+  if (
+    req.method === "GET" &&
+    req.headers.authorization === "lekansaheed@prodeveloperforlife"
+  ) {
     const getUser = async () => {
       const db = getFirestore();
 

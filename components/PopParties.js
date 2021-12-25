@@ -89,6 +89,19 @@ const PopParties = () => {
 
   React.useEffect(() => {
     const fetchParties = async () => {
+      await fetch("http://localhost:3000/api/hello", {
+        headers: {
+          authorization: "lekansaheed@prodeveloperforlife",
+          method: "GET",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       const myParties = [];
       const temp = [];
       const docRef = collection(db, "parties");
