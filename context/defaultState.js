@@ -3,4 +3,5 @@ export const defaultState = {
   isUser: false,
   isToggleMobile: false,
   darkMode: true,
+  search: "",
 };

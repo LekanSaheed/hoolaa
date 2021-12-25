@@ -34,11 +34,15 @@ const Party = () => {
   const [search, setSearch] = useState("");
   const [notFound, setNotFound] = useState(false);
   const [reserved, setReserved] = useState([]);
-  const { isToggled, darkMode } = useGlobalContext();
+  const { darkMode } = useGlobalContext();
+  const setSearch_ = useGlobalContext().setSearch;
+
   const router = useRouter();
+  const search_ = useGlobalContext();
   React.useEffect(() => {
     setCurrent("all");
     const fetchParty = async () => {
+      console.log(router.query.partyId);
       const docRef = doc(db, "parties", router.query.partyId);
       await getDoc(docRef)
         .then(async (doc_) => {
@@ -64,7 +68,7 @@ const Party = () => {
               newData.menus ? setMenus(newData.menus) : setMenus([]);
 
               setParty(newData);
-
+              setNotFound(false);
               console.log(menus);
               setLoading(false);
             });
@@ -80,7 +84,7 @@ const Party = () => {
         });
     };
     fetchParty();
-  }, []);
+  }, [router.query.q]);
   const filterMenu = (category) => {
     const newCategory = party.menus
       ? party.menus.filter((menu) => menu.category.value === category)

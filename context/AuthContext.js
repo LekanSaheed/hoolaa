@@ -67,7 +67,7 @@ const reducer = (state, { type, payload }) => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const { toggleTheme } = useGlobalContext();
+  const { toggleTheme, setSearch } = useGlobalContext();
   const router = useRouter();
   const [state, defaultDispatch] = useReducer(reducer, {
     user: null,
@@ -77,6 +77,7 @@ export const AuthProvider = ({ children }) => {
   const dispatch = (type, payload) => defaultDispatch({ type, payload });
 
   useEffect(() => {
+    setSearch("");
     if (window.matchMedia) {
       // Check if the dark-mode Media-Query matches
       if (window.matchMedia("(prefers-color-scheme: dark)").matches) {

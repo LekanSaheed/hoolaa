@@ -22,6 +22,10 @@ function MyApp({ Component, pageProps }) {
     dispatch({ type: "TOGGLE_THEME" });
   };
 
+  const setSearch = (q) => {
+    dispatch({ type: "SET_SEARCH", payload: q });
+  };
+
   const router = useRouter();
   const protectedRoutes = [
     "/dashboard",
@@ -37,7 +41,7 @@ function MyApp({ Component, pageProps }) {
   ];
   return (
     <AppContext.Provider
-      value={{ ...state, toggleNav, toggleMobile, toggleTheme }}
+      value={{ ...state, toggleNav, toggleMobile, toggleTheme, setSearch }}
     >
       <AuthProvider>
         <PrivateRoute protectedRoutes={protectedRoutes}>

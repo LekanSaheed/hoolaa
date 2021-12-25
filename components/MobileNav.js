@@ -5,6 +5,8 @@ import classes from "./MobileNav.module.css";
 import { navLinks } from "./SideNav";
 import { useRouter } from "next/router";
 import { MdClose } from "react-icons/md";
+import { Box } from "@mui/system";
+import { BiMoon, BiSun } from "react-icons/bi";
 
 const itemVariants = {
   closed: {
@@ -37,9 +39,6 @@ const MobileNav = () => {
       <AnimatePresence>
         {isToggleMobile && (
           <motion.div className={classes.backgroundCont}>
-            <button onClick={() => toggleTheme()}>
-              {darkMode ? "dark" : "light"}
-            </button>
             <motion.aside
               initial={{ width: 0 }}
               animate={{
@@ -60,9 +59,15 @@ const MobileNav = () => {
                 exit="closed"
                 variants={sideVariants}
               >
-                <div onClick={() => toggleMobile()}>
-                  <MdClose />
-                </div>
+                <Box display="flex" justifyContent="space-between">
+                  {" "}
+                  <div onClick={() => toggleMobile()}>
+                    <MdClose />
+                  </div>
+                  <div onClick={() => toggleTheme()}>
+                    {darkMode ? <BiSun /> : <BiMoon />}
+                  </div>
+                </Box>
                 {links.map((nav, id) => (
                   <div
                     key={id}

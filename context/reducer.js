@@ -17,4 +17,10 @@ export const reducer = (state, action) => {
       darkMode: !state.darkMode,
     };
   }
+  if (action.type === "SET_SEARCH") {
+    return {
+      ...state,
+      search: action.payload,
+    };
+  }
 };

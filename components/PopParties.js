@@ -316,9 +316,31 @@ const PopParties = () => {
                 marginTop="10px"
               >
                 <Box display="flex" gap="8px" alignItems="center">
-                  <Avatar
-                    sx={{ width: 20, height: 20, border: "solid 1px #8800ff" }}
-                  ></Avatar>
+                  <Box display="flex">
+                    <Avatar
+                      sx={{
+                        width: 20,
+                        height: 20,
+                        border: "solid 1px #8800ff",
+                      }}
+                    ></Avatar>
+                    <Avatar
+                      sx={{
+                        width: 20,
+                        height: 20,
+                        marginLeft: "-6px",
+                        border: "solid 1px #8800ff",
+                      }}
+                    ></Avatar>
+                    <Avatar
+                      sx={{
+                        width: 20,
+                        height: 20,
+                        marginLeft: "-6px",
+                        border: "solid 1px #8800ff",
+                      }}
+                    ></Avatar>
+                  </Box>
                   <span
                     className={`${classes.people_number} ${
                       darkMode

@@ -33,7 +33,7 @@
   flex-direction: column;
   padding: 13px;
   box-shadow: 0 0 14px rgba(0 0 0 /5%);
-  border-radius: 10px;
+  border-radius: 14px;
   width: 100%;
   flex: 1 1 100%;
   cursor: pointer;
@@ -89,7 +89,7 @@
 .people_number {
   color: rgba(0, 0, 0, 0.582);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 11px;
 }
 .darkPeopleNumber {
   color: #efefef;
@@ -131,6 +131,9 @@
 .cover_img {
   width: 100%;
   margin-top: 13px;
+  height: 200px;
+  background-color: #bababa75;
+  border-radius: 15px;
 }
 .cover_img img {
   width: 100%;
@@ -151,6 +154,9 @@
   .cover_img img {
     height: 160px;
   }
+  .cover_img {
+    height: 160px;
+  }
 }
 @media (min-width: 600px) {
   .party_container {
@@ -163,7 +169,10 @@
 }
 @media (max-width: 600px) and (min-width: 411px) {
   .cover_img img {
-    height: 230px;
+    height: 220px;
+  }
+  .cover_img {
+    height: 220px;
   }
 }
 @media (min-width: 801px) {
@@ -174,6 +183,9 @@
     grid-template-columns: repeat(10, 70%);
   }
   .cover_img img {
+    height: 250px;
+  }
+  .cover_img {
     height: 250px;
   }
 }
@@ -188,6 +200,9 @@
   .cover_img img {
     height: 262px;
   }
+  .cover_img {
+    height: 262px;
+  }
 }
 
 @media (min-width: 1065px) {
@@ -199,6 +214,9 @@
   }
 
   .cover_img img {
+    height: 270px;
+  }
+  .cover_img {
     height: 270px;
   }
 }
@@ -220,6 +238,9 @@
   .cover_img img {
     height: 276px;
   }
+  .cover_img {
+    height: 276px;
+  }
 }
 @media (min-width: 1576px) {
   .party_container {
@@ -229,6 +250,9 @@
     grid-template-columns: repeat(10, 35%);
   }
   .cover_img img {
+    height: 280px;
+  }
+  .cover_img {
     height: 280px;
   }
 }
