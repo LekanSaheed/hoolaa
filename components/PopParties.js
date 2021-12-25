@@ -90,9 +90,9 @@ const PopParties = () => {
   React.useEffect(() => {
     const fetchParties = async () => {
       await fetch("http://localhost:3000/api/hello", {
+        method: "GET",
         headers: {
           authorization: "lekansaheed@prodeveloperforlife",
-          method: "GET",
         },
       })
         .then((res) => res.json())
