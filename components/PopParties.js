@@ -4,7 +4,7 @@ import classes from "./PopParties.module.css";
 import { Avatar, Button, Skeleton, useMediaQuery } from "@mui/material";
 import { MdSpaceDashboard } from "react-icons/md";
 import { ImLocation2 } from "react-icons/im";
-import { BsFillCalendar2WeekFill } from "react-icons/bs";
+import { BsDot, BsFillCalendar2WeekFill } from "react-icons/bs";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import {
@@ -21,6 +21,7 @@ import {
 import Image from "next/image";
 import moment from "moment";
 import { useGlobalContext } from "../context/context";
+import { BiCheck } from "react-icons/bi";
 
 const PopParties = () => {
   const { darkMode, isToggled } = useGlobalContext();
@@ -89,19 +90,19 @@ const PopParties = () => {
 
   React.useEffect(() => {
     const fetchParties = async () => {
-      await fetch("http://localhost:3000/api/hello", {
-        method: "GET",
-        headers: {
-          authorization: "lekansaheed@prodeveloperforlife",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      // await fetch("http://localhost:3000/api/hello", {
+      //   method: "GET",
+      //   headers: {
+      //     authorization: "lekansaheed@prodeveloperforlife",
+      //   },
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     console.log(data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
       const myParties = [];
       const temp = [];
       const docRef = collection(db, "parties");
@@ -295,24 +296,33 @@ const PopParties = () => {
               }`}
               onClick={() => router.push("/dashboard/parties/" + party.id)}
             >
-              <Box display="flex" gap="14px" alignItems="center">
-                <Avatar
-                  src={party.creator.displayPics && party.creator.displayPics}
-                  sx={{ width: 33, height: 33, fontSize: "14px" }}
-                >
-                  {!party.creator.displayPics &&
-                    party.creator.username.slice(0, 1).toUpperCase()}
-                </Avatar>
-                <Box display="flex" flexDirection="column" gap="3px">
-                  <span className={classes.partyName}> {party.partyName}</span>
-                  <span
-                    className={` ${classes.location} ${
-                      darkMode ? classes.darkLocation : ""
-                    }`}
+              <Box display="flex" justifyContent="space-between">
+                {" "}
+                <Box display="flex" gap="14px" alignItems="center">
+                  <Avatar
+                    src={party.creator.displayPics && party.creator.displayPics}
+                    sx={{ width: 33, height: 33, fontSize: "14px" }}
                   >
-                    {`${party.location.city}, ${party.location.state}`}
-                  </span>
+                    {!party.creator.displayPics &&
+                      party.creator.username.slice(0, 1).toUpperCase()}
+                  </Avatar>
+                  <Box display="flex" flexDirection="column" gap="3px">
+                    <span className={classes.partyName}>
+                      {" "}
+                      {party.partyName}
+                    </span>
+                    <span
+                      className={` ${classes.location} ${
+                        darkMode ? classes.darkLocation : ""
+                      }`}
+                    >
+                      {`${party.location.city}, ${party.location.state}`}
+                    </span>
+                  </Box>
                 </Box>
+                {party.isStarted && (
+                  <BsDot style={{ color: "green", fontSize: "39px" }} />
+                )}
               </Box>
               <div className={classes.cover_img}>
                 <img
@@ -361,7 +371,13 @@ const PopParties = () => {
                         : "classes.people_number"
                     } `}
                   >
-                    3 people attending
+                    {party.isStarted
+                      ? `${
+                          Math.floor(Math.random() * 100) + 70
+                        } people in party`
+                      : `${
+                          Math.floor(Math.random() * 100) + 70
+                        } people attending`}
                   </span>
                 </Box>
                 <Box display="flex" gap="5px">
@@ -433,24 +449,40 @@ const PopParties = () => {
                   <Box
                     borderRadius="10px"
                     border="solid 1px #bababa"
+                    height="70px"
+                    width="70px"
                     display="flex"
                     justifyContent="center"
                     flexDirection="column"
                     alignItems="center"
-                    gap="4px"
-                    height="70px"
-                    width="70px"
                   >
-                    <span
-                      style={{ textTransform: "uppercase", fontSize: "10px" }}
-                    >
-                      {" "}
-                      {moment(party.start_date.toDate()).format("MMM")}
-                    </span>
-                    <span style={{ fontWeight: "600", fontSize: "18px" }}>
-                      {" "}
-                      {moment(party.start_date.toDate()).format("DD")}
-                    </span>
+                    {party.isStarted ? (
+                      <div>
+                        <BiCheck style={{ fontSize: "30px", color: "green" }} />
+                      </div>
+                    ) : (
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        flexDirection="column"
+                        alignItems="center"
+                        gap="4px"
+                      >
+                        <span
+                          style={{
+                            textTransform: "uppercase",
+                            fontSize: "10px",
+                          }}
+                        >
+                          {" "}
+                          {moment(party.start_date.toDate()).format("MMM")}
+                        </span>
+                        <span style={{ fontWeight: "600", fontSize: "18px" }}>
+                          {" "}
+                          {moment(party.start_date.toDate()).format("DD")}
+                        </span>
+                      </Box>
+                    )}
                   </Box>
                 </Box>
               </Box>
