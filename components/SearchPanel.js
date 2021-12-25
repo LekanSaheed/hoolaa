@@ -91,6 +91,8 @@ export default function BasicTabs({ all, parties, loading, users }) {
       <div>
         <TabPanel
           className={`${classes.panel} ${darkMode ? classes.darkPanel : ""}`}
+          value={value}
+          index={0}
         >
           <div
             style={{
@@ -100,8 +102,6 @@ export default function BasicTabs({ all, parties, loading, users }) {
                   ? "column-reverse"
                   : "column",
             }}
-            value={value}
-            index={0}
           >
             <div>
               Parties

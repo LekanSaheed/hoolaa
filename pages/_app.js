@@ -6,7 +6,12 @@ import { reducer } from "../context/reducer";
 import PrivateRoute from "../components/PrivateRoute";
 import { useRouter } from "next/router";
 import { AuthProvider } from "../context/AuthContext";
-import { ToastContainer } from "react-toastify";
+import {
+  toast,
+  ToastContainer,
+  useToast,
+  useToastContainer,
+} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./app.module.css";
 
@@ -25,7 +30,15 @@ function MyApp({ Component, pageProps }) {
   const setSearch = (q) => {
     dispatch({ type: "SET_SEARCH", payload: q });
   };
-
+  const toasts = useToastContainer;
+  console.log(useToastContainer);
+  // const limit = 2;
+  // useEffect(() => {
+  //   toasts
+  //     .filter((t) => t.visible)
+  //     .filter((_, i) => i >= limit)
+  //     .forEach((t) => toast.dismiss(t.id));
+  // }, [toasts]);
   const router = useRouter();
   const protectedRoutes = [
     "/dashboard",
@@ -45,7 +58,10 @@ function MyApp({ Component, pageProps }) {
     >
       <AuthProvider>
         <PrivateRoute protectedRoutes={protectedRoutes}>
-          <ToastContainer autoClose={3000} />
+          <ToastContainer
+            autoClose={3000}
+            theme={state.darkMode ? "colored" : "light"}
+          />
           <Component
             className={state.darkMode ? classes.darkBody : classes.light}
             {...pageProps}
