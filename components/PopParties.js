@@ -160,7 +160,7 @@ const PopParties = () => {
         setTimeout(() => {
           setItems();
           setLoading(false);
-        }, 100);
+        }, 600);
       });
     };
     fetchParties();
@@ -330,6 +330,9 @@ const PopParties = () => {
                 )}
                 {party.isEnded && (
                   <BsDot style={{ color: "red", fontSize: "39px" }} />
+                )}
+                {!party.isStarted && (
+                  <BsDot style={{ color: "goldenrod", fontSize: "39px" }} />
                 )}
               </Box>
               <div className={classes.cover_img}>

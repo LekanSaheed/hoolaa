@@ -4,6 +4,7 @@ import SideNav from "./SideNav";
 import classes from "./Wrapper.module.css";
 import { useGlobalContext } from "../context/context";
 import MobileNav from "./MobileNav";
+import HoolaaButtomNav from "./HoolaaButtomNav";
 const Wrapper = ({ children }) => {
   const { isToggled, darkMode } = useGlobalContext();
   return (
@@ -17,6 +18,10 @@ const Wrapper = ({ children }) => {
       >
         <Header />
         {children}
+        <div className={classes.mobileButtomNav}>
+          {" "}
+          <HoolaaButtomNav />
+        </div>
       </main>
     </div>
   );

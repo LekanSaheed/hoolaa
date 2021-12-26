@@ -80,10 +80,6 @@ const Login = () => {
               .toLowerCase()
         );
         console.log(error);
-      })
-      .catch((err) => {
-        setLoading(false);
-        toast.error(err.message);
       });
   };
   return (

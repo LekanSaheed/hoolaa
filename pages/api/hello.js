@@ -107,6 +107,7 @@ export default function handler(req, res) {
                               attachment: null,
                             },
                             created_At: Timestamp.fromDate(new Date()),
+                            read: false,
                           })
                           .catch((err) => console.log(err.message));
                         sendAlertMail({
@@ -192,6 +193,7 @@ export default function handler(req, res) {
                               attachment: null,
                             },
                             created_At: Timestamp.fromDate(new Date()),
+                            read: false,
                           })
                           .catch((err) => console.log(err.message));
                         sendAlertMail({

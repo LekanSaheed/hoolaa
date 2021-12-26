@@ -1,13 +1,23 @@
 import React from "react";
 import { useAuthState } from "../../context/AuthContext";
-import { db, collection, getDocs, where, query } from "../../firebase/firebase";
+import {
+  db,
+  collection,
+  doc,
+  where,
+  query,
+  onSnapshot,
+  updateDoc,
+} from "../../firebase/firebase";
 import Wrapper from "../../components/Wrapper";
 import { Box } from "@mui/system";
 import classes from "./notifications.module.css";
 import { useGlobalContext } from "../../context/context";
-import { Avatar, Divider } from "@mui/material";
+import { Avatar, Divider, useMediaQuery } from "@mui/material";
 import moment from "moment";
-import { BsCalendarCheckFill } from "react-icons/bs";
+import { BsCalendarCheckFill, BsCalendarXFill } from "react-icons/bs";
+import { MdNotifications } from "react-icons/md";
+import { toast } from "react-toastify";
 const Notifications = () => {
   const { user } = useAuthState();
   const { darkMode } = useGlobalContext();
@@ -19,26 +29,57 @@ const Notifications = () => {
       where("userId", "==", user.user.uid)
     );
     const _notification = [];
-    await getDocs(docRef)
-      .then((snaps) => {
-        if (!snaps.empty) {
-          snaps.forEach(async (doc) => {
-            await _notification.push({ ...doc.data(), id: doc.id });
-            setNotifications(_notification);
-            console.log(_notification);
-            setLoading(false);
+    onSnapshot(docRef, async (snaps) => {
+      snaps.docChanges().forEach(async (change) => {
+        if (change.type === "added") {
+          await _notification.push({
+            ...change.doc.data(),
+            id: change.doc.id,
           });
-        } else {
+          setNotifications(
+            _notification.sort(function (a, b) {
+              return (
+                new Date(b.created_At.toDate().getTime()) -
+                new Date(a.created_At.toDate().getTime())
+              );
+            })
+          );
+          console.log(_notification);
           setLoading(false);
         }
-      })
-      .catch((err) => {
-        console.log(err.message);
+        if (change.type === "modified") {
+          const data = { ...change.doc.data(), id: change.doc.id };
+
+          let ind = notifications.findIndex((t) => t.id === data.id);
+          notifications[ind] = data;
+          console.log(data, "Modified");
+          setLoading(false);
+        }
+        if (change.type === "removed") {
+          const data = { ...change.doc.data(), id: change.doc.id };
+          notifications.filter((n) => n.id !== data.id);
+          setLoading(false);
+        }
       });
+      setLoading(false);
+    });
   };
   React.useEffect(() => {
     fetchNotifications();
   }, []);
+
+  const updateNotification = (id) => {
+    const docRef = doc(db, "notifications", id);
+    updateDoc(docRef, {
+      read: true,
+    })
+      .then((status) => {
+        console.log(status);
+        toast.success("Notification Read");
+      })
+      .catch((err) => [console.log(err)]);
+  };
+  const matches = useMediaQuery("(max-width: 450px)");
   return (
     <Wrapper>
       {loading && "Loading"}
@@ -82,13 +123,14 @@ const Notifications = () => {
                   gap="8px"
                   padding="10px"
                   paddingRight="0"
+                  onClick={() => updateNotification(instance.id)}
                 >
                   {" "}
                   <Box display="flex" gap="8px" width="100%">
                     <Avatar
                       sx={{
                         backgroundColor:
-                          instance.type === "event_start" ? "green" : "red",
+                          instance.type === "event_start" ? "green" : "#A52A2A",
                         color: "white",
                       }}
                       src={
@@ -99,18 +141,39 @@ const Notifications = () => {
                     >
                       {instance.type === "event_start" ? (
                         <BsCalendarCheckFill />
+                      ) : instance.type === "event_end" ? (
+                        <BsCalendarXFill />
                       ) : (
-                        <BsCalendarCheckFill />
+                        <MdNotifications />
                       )}
                     </Avatar>
                     <Box display="flex" gap="4px" flexDirection="column">
                       {" "}
-                      <span style={{ fontWeight: "600" }}>
+                      <span
+                        style={{
+                          fontWeight: instance.read ? "600" : "800",
+                          fontSize: instance.read ? "13px" : "normal",
+                          color: instance.read ? "#a3a3a3" : "inherit",
+                        }}
+                      >
                         {instance.notification.header}
                       </span>
-                      <div style={{ fontSize: "13px", color: "#a3a3a3" }}>
-                        {instance.notification.body}
-                      </div>
+                      <span
+                        className={classes.note}
+                        style={{
+                          fontSize: instance.read ? "13px" : "15px",
+                          fontWeight: instance.read ? "normal" : "600",
+                          color: "#a3a3a3",
+                        }}
+                      >
+                        {matches
+                          ? instance.notification.body
+                              .slice(0, 40)
+                              .concat("...")
+                          : instance.notification.body
+                              .slice(0, 86)
+                              .concat("...")}
+                      </span>
                     </Box>
                   </Box>
                   <Box

@@ -5,7 +5,17 @@
   background-color: #242526 !important;
   color: white !important;
 }
+.mobileButtomNav {
+  /* width: 100%; */
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
 @media (min-width: 801px) {
+  .mobileButtomNav {
+    display: none;
+  }
   .main {
     width: 100%;
     overflow-x: hidden;
