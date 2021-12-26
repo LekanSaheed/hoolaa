@@ -3,8 +3,13 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 
 import { BiFolder, BiLocationPlus } from "react-icons/bi";
-import { MdFavorite, MdRestore } from "react-icons/md";
-import { makeStyles } from "@material-ui/core";
+import {
+  MdFavorite,
+  MdNotifications,
+  MdNotificationsNone,
+  MdRestore,
+} from "react-icons/md";
+import { makeStyles } from "@mui/styles";
 import { useAuthState } from "../context/AuthContext";
 import { useGlobalContext } from "../context/context";
 import { useRouter } from "next/router";
@@ -72,7 +77,13 @@ export default function LabelBottomNavigation() {
       <BottomNavigationAction
         // label="Folder"
         value="/dashboard/notifications"
-        icon={<BiFolder />}
+        icon={
+          value === "/dashboard/notifications" ? (
+            <MdNotifications />
+          ) : (
+            <MdNotificationsNone />
+          )
+        }
       />
       <BottomNavigationAction
         // label="Folder"
