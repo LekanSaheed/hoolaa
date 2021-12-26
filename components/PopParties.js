@@ -325,8 +325,11 @@ const PopParties = () => {
                     </span>
                   </Box>
                 </Box>
-                {party.isStarted && (
+                {party.isStarted && !party.isEnded && (
                   <BsDot style={{ color: "green", fontSize: "39px" }} />
+                )}
+                {party.isEnded && (
+                  <BsDot style={{ color: "red", fontSize: "39px" }} />
                 )}
               </Box>
               <div className={classes.cover_img}>
@@ -376,10 +379,14 @@ const PopParties = () => {
                         : "classes.people_number"
                     } `}
                   >
-                    {party.isStarted
+                    {party.isStarted && !party.isEnded
                       ? `${
                           Math.floor(Math.random() * 100) + 70
                         } people in party`
+                      : party.isEnded
+                      ? `${
+                          Math.floor(Math.random() * 100) + 70
+                        } people attended this party`
                       : `${
                           Math.floor(Math.random() * 100) + 70
                         } people attending`}
@@ -453,7 +460,7 @@ const PopParties = () => {
                   </Box>
                   <Box
                     borderRadius="10px"
-                    border="solid 1px #bababa"
+                    border={!party.isEnded ? "solid 1px #bababa" : "none"}
                     height="70px"
                     width="70px"
                     display="flex"
@@ -461,10 +468,21 @@ const PopParties = () => {
                     flexDirection="column"
                     alignItems="center"
                   >
-                    {party.isStarted ? (
+                    {party.isStarted && !party.isEnded ? (
                       <div>
                         <BiCheck style={{ fontSize: "30px", color: "green" }} />
                       </div>
+                    ) : party.isEnded ? (
+                      <Box
+                        style={{
+                          padding: "4px",
+                          color: "red",
+                          border: "solid 1px red",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        OVER
+                      </Box>
                     ) : (
                       <Box
                         display="flex"

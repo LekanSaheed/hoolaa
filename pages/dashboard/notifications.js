@@ -113,7 +113,12 @@ const Notifications = () => {
                       </div>
                     </Box>
                   </Box>
-                  <Box width="20%" fontSize="12px" color="#bababa">
+                  <Box
+                    width="20%"
+                    fontSize="12px"
+                    fontWeight="600"
+                    color="#bababa"
+                  >
                     {time}
                   </Box>
                 </Box>

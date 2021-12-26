@@ -114,7 +114,7 @@ export default function handler(req, res) {
                           name: doc.data().firstName,
                           body: `<div>
                           <div style='fontSize: 17px'> <b> Hello ${
-                            data.partyName
+                            doc.data().firstName
                           }</b>, </div>
                           your ${data.category.label} with name
                           <div style='padding: 10px'>
@@ -169,7 +169,6 @@ export default function handler(req, res) {
               await docRef
                 .doc(data.id)
                 .update({
-                  isStarted: true,
                   isEnded: true,
                 })
                 .then(() => {
@@ -200,7 +199,7 @@ export default function handler(req, res) {
                           name: doc.data().firstName,
                           body: `<div>
                           <div style='fontSize: 17px'> <b> Hello ${
-                            data.partyName
+                            doc.data().firstName
                           }</b>, </div>
                           your ${data.category.label} with name
                           <div style='padding: 10px'>
@@ -210,7 +209,7 @@ export default function handler(req, res) {
                           "hh:mm:a on ddd, MMM DD, YYYY "
                         )} has Ended
                             </div>`,
-                          status: "end",
+                          status: "bend",
                         }).catch(console.error);
                       }
                     });
