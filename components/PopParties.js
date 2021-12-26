@@ -22,6 +22,7 @@ import Image from "next/image";
 import moment from "moment";
 import { useGlobalContext } from "../context/context";
 import { BiCheck } from "react-icons/bi";
+import { async } from "@firebase/util";
 
 const PopParties = () => {
   const { darkMode, isToggled } = useGlobalContext();
@@ -107,7 +108,7 @@ const PopParties = () => {
       const temp = [];
       const docRef = collection(db, "parties");
       const q = query(docRef, orderBy("created_At", "desc"), limit(10));
-      onSnapshot(q, (snapshot) => {
+      onSnapshot(q, async (snapshot) => {
         snapshot.docChanges().forEach(async (change) => {
           parties = [];
           if (change.type === "added") {
@@ -142,25 +143,29 @@ const PopParties = () => {
             myParties = newParties;
           }
         });
-        temp.forEach(async (t) => {
+        const res = [];
+        await temp.forEach(async (t) => {
+          // const creator = {};
           const userDocRef = doc(db, "users", t.created_By);
-          await getDoc(userDocRef).then(async (adoc) => {
-            const newParty = myParties.map((p) => {
-              return {
-                ...p,
-                creator: adoc.data(),
-              };
-            });
-            setParties(newParty);
-            setLoading(false);
-            // console.log(newParty, "Py");
-          });
+          await getDoc(userDocRef)
+            .then(async (adoc) => {
+              const creator = adoc.data();
+              res.push({ ...t, creator: creator });
+            })
+            .catch((err) => console.log(err));
         });
+        const setItems = async () => {
+          setParties(res);
+        };
+        setTimeout(() => {
+          setItems();
+          setLoading(false);
+        }, 100);
       });
     };
     fetchParties();
   }, []);
-
+  console.log(parties);
   const HoolaSkels = () => {
     return (
       <Box padding="10px">

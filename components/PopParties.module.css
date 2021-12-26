@@ -24,6 +24,7 @@
   flex-basis: 100%;
   grid-template-columns: repeat(10, 90%);
   padding: 10px;
+  overflow-y: hidden;
 }
 .darkParty {
   background-color: #373737ff !important;
