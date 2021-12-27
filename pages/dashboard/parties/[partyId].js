@@ -125,19 +125,42 @@ const Party = () => {
   };
   const makeReservation = async () => {
     const p = "FLWSECK_TEST-0259b4239de114629f49f6408b882f48-X";
-    await fetch("https://api.flutterwave.com/v3/accounts/resolve", {
+    await fetch("https://api.flutterwave.com/v3/payments", {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${p}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-      method: "POST",
-      body: {
-        account_number: "0690000032",
-        account_bank: "044",
-      },
+
+      body: JSON.stringify({
+        tx_ref: "hoolaa23-tx-1920bbtytty",
+        amount: "100",
+        currency: "NGN",
+        redirect_url: "https://hoolaa.vercel.app/successful",
+        payment_options: "card",
+        meta: {
+          consumer_id: 23,
+          consumer_mac: "92a3-912ba-1192a",
+        },
+        customer: {
+          email: "user@gmail.com",
+          phonenumber: "080****4528",
+          name: "Yemi Desola",
+        },
+        customizations: {
+          title: "Hoolaa reservations payment",
+          description: "Reservaation isn't free. Pay the price",
+          logo: "https://assets.piedpiper.com/logo.png",
+        },
+      }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      .then((res) => {
+        console.log(res);
+        if (res.status === "success") {
+          window.open(res.data.link, "_blank");
+        }
       })
       .catch((err) => {
         console.log(err);
