@@ -9,7 +9,7 @@ import {
   MdNotificationsNone,
   MdRestore,
 } from "react-icons/md";
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from "@material-ui/core";
 import { useAuthState } from "../context/AuthContext";
 import { useGlobalContext } from "../context/context";
 import { useRouter } from "next/router";
@@ -33,15 +33,16 @@ export default function LabelBottomNavigation() {
       width: "100%",
       backgroundColor: darkMode ? "#373737ff !important" : "#fff",
       "& .css-1bped5o-MuiBottomNavigation-root": {},
-      "& .css-b6y1q4-MuiButtonBase-root-MuiBottomNavigationAction-root": {
+      "& .MuiBottomNavigationAction-wrapper": {
         fontSize: "30px",
-        color: darkMode ? "#fff !important" : "grey",
+        color: darkMode ? "#fff" : "grey",
       },
-      "& .css-1ee5err-MuiButtonBase-root-MuiBottomNavigationAction-root.Mui-selected":
-        {
+      "& .MuiBottomNavigationAction-root.Mui-selected": {
+        "& .MuiBottomNavigationAction-wrapper": {
           fontSize: "50px",
-          color: "#8800ff",
+          color: "#8800ff !important",
         },
+      },
     },
   });
   const _class = useStyles();
