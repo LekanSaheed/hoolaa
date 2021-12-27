@@ -1,6 +1,6 @@
 import * as React from "react";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { BottomNavigation } from "@material-ui/core";
+import { BottomNavigationAction } from "@material-ui/core";
 
 import { BiFolder, BiLocationPlus } from "react-icons/bi";
 import {
