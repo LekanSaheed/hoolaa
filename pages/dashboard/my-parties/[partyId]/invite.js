@@ -20,8 +20,19 @@ const Invite = () => {
         .then((doc_) => {
           if (doc_.exists()) {
             if (doc_.data().created_By === user.user.uid) {
-              if (doc_.data().inviteCode) {
-                setCode(doc_.data().inviteCode);
+              if (doc_.data().code) {
+                setCode(
+                  doc_
+                    .data()
+                    .code.filter((r) => r.type === "party_code")
+                    .map((r) => r.code)[0]
+                );
+                console.log(
+                  doc_
+                    .data()
+                    .code.filter((r) => r.type === "party_code")
+                    .map((r) => r.code)
+                );
               } else {
                 setCode("NO CODE FOUND");
               }
@@ -57,7 +68,7 @@ const Invite = () => {
   const shareCode = () => {
     navigator.share({
       title: "Follow to join my party",
-      url: "/dashboard/parties/thi",
+      url: "/dashboard/parties/" + router.query.partyId,
     });
   };
   return (

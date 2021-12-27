@@ -24,73 +24,18 @@ import { useGlobalContext } from "../context/context";
 import { BiCheck } from "react-icons/bi";
 import { async } from "@firebase/util";
 import ActiveNotifier from "./ActiveNotifier";
+import { useAuthState } from "../context/AuthContext";
 
 const PopParties = () => {
   const { darkMode, isToggled } = useGlobalContext();
-  // const parties = [
-  //   {
-  //     img: "Party 1",
-  //     party_name: "My House Party",
-  //     category: "House Party",
-  //     address: "So so so",
-  //     start_date: "Dec 25 2001",
-  //     id: 1,
-  //   },
-  //   {
-  //     img: "Party 1",
-  //     party_name: "My House Party",
-  //     category: "House Party",
-  //     address: "So so so",
-  //     start_date: "Dec 25 2001",
-  //     id: 2,
-  //   },
-  //   {
-  //     img: "Party 1",
-  //     party_name: "My House Party",
-  //     category: "House Party",
-  //     address: "So so so",
-  //     start_date: "Dec 25 2001",
-  //     id: 3,
-  //   },
-  //   {
-  //     img: "Party 1",
-  //     party_name: "My House Party",
-  //     category: "House Party",
-  //     address: "So so so",
-  //     start_date: "Dec 25 2001",
-  //     id: 4,
-  //   },
-  //   {
-  //     img: "Party 1",
-  //     party_name: "My House Party",
-  //     category: "House Party",
-  //     address: "So so so",
-  //     start_date: "Dec 25 2001",
-  //     id: 5,
-  //   },
-  //   {
-  //     img: "Party 1",
-  //     party_name: "My House Party",
-  //     category: "House Party",
-  //     address: "So so so",
-  //     start_date: "Dec 25 2001",
-  //     id: 6,
-  //   },
-  //   {
-  //     img: "Party 1",
-  //     party_name: "My House Party",
-  //     category: "House Party",
-  //     address: "So so so",
-  //     start_date: "Dec 25 2001",
-  //     id: 7,
-  //   },
-  // ];
   const [parties, setParties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
-
+  const { user } = useAuthState();
   React.useEffect(() => {
+    const token = user.user.token;
+
     const fetchParties = async () => {
       // await fetch("http://localhost:3000/api/hello", {
       //   method: "GET",

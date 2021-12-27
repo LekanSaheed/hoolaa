@@ -22,6 +22,7 @@ import {
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  signInWithCustomToken,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
@@ -71,4 +72,5 @@ export {
   limit,
   updateDoc,
   arrayUnion,
+  signInWithCustomToken,
 };

@@ -137,7 +137,7 @@ const Party = () => {
         tx_ref: "hoolaa-rt-tx-" + new Date().getTime().toString(),
         amount: "100",
         currency: "NGN",
-        redirect_url: "https://hoolaa.vercel.app/tx",
+        redirect_url: "https://hoolaa.vercel.app/dashboard/tx",
         payment_options: "card",
         meta: {
           consumer_id: 23,

@@ -36,7 +36,7 @@ const Header = () => {
             const data = { ...doc.data(), id: doc.id };
             _users.push(data);
             setUsers(_users);
-            console.log(_users, "users");
+            // console.log(_users, "users");
             setLoading(false);
           });
         })
@@ -54,7 +54,7 @@ const Header = () => {
             const data = { ...doc.data(), id: doc.id };
             _parties.push(data);
             setParties(_parties);
-            console.log(_parties);
+            // console.log(_parties);
             setLoading(false);
           });
         })
