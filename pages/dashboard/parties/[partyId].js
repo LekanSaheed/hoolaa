@@ -123,6 +123,26 @@ const Party = () => {
       setMenus(party.menus);
     }
   };
+  const makeReservation = async () => {
+    const p = "FLWSECK_TEST-0259b4239de114629f49f6408b882f48-X";
+    await fetch("https://api.flutterwave.com/v3/accounts/resolve", {
+      headers: {
+        Authorization: `Bearer ${p}`,
+      },
+      method: "POST",
+      body: {
+        account_number: "0690000032",
+        account_bank: "044",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <Wrapper>
       <Box
@@ -504,6 +524,15 @@ const Party = () => {
                         </motion.div>
                       );
                     })}
+                  <Button
+                    fullWidth
+                    color="primary"
+                    variant="contained"
+                    style={{ background: "#8800ff" }}
+                    onClick={() => makeReservation()}
+                  >
+                    Make Reservation
+                  </Button>
                 </Box>
               </div>
             </div>

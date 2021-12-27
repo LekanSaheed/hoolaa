@@ -4,6 +4,7 @@
 .dark {
   background-color: #242526 !important;
   color: white !important;
+  transition: 0.2s;
 }
 .mobileButtomNav {
   /* width: 100%; */

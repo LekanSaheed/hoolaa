@@ -23,6 +23,7 @@ import moment from "moment";
 import { useGlobalContext } from "../context/context";
 import { BiCheck } from "react-icons/bi";
 import { async } from "@firebase/util";
+import ActiveNotifier from "./ActiveNotifier";
 
 const PopParties = () => {
   const { darkMode, isToggled } = useGlobalContext();
@@ -107,7 +108,8 @@ const PopParties = () => {
       const myParties = [];
       const temp = [];
       const docRef = collection(db, "parties");
-      const q = query(docRef, orderBy("created_At", "desc"), limit(10));
+      // const q = query(docRef, orderBy("created_At", "desc"), limit(10));
+      const q = docRef;
       onSnapshot(q, async (snapshot) => {
         snapshot.docChanges().forEach(async (change) => {
           parties = [];
@@ -144,6 +146,26 @@ const PopParties = () => {
           }
         });
         const res = [];
+        function shuffle(array) {
+          let currentIndex = array.length,
+            randomIndex;
+
+          // While there remain elements to shuffle...
+          while (currentIndex != 0) {
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+              array[randomIndex],
+              array[currentIndex],
+            ];
+          }
+
+          return array;
+        }
+
         await temp.forEach(async (t) => {
           // const creator = {};
           const userDocRef = doc(db, "users", t.created_By);
@@ -155,7 +177,7 @@ const PopParties = () => {
             .catch((err) => console.log(err));
         });
         const setItems = async () => {
-          setParties(res);
+          setParties(shuffle(res));
         };
         setTimeout(() => {
           setItems();
@@ -326,7 +348,8 @@ const PopParties = () => {
                   </Box>
                 </Box>
                 {party.isStarted && !party.isEnded && (
-                  <BsDot style={{ color: "green", fontSize: "39px" }} />
+                  <ActiveNotifier />
+                  // <BsDot style={{ color: "green", fontSize: "39px" }} />
                 )}
                 {party.isEnded && (
                   <BsDot style={{ color: "red", fontSize: "39px" }} />

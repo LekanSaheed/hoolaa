@@ -94,6 +94,9 @@
   background-color: #373737ff;
   color: white;
 }
+.dark .icon {
+  color: white !important;
+}
 @media (max-width: 800px) {
   .searchContainer {
     width: 100%;
