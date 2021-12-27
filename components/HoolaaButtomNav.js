@@ -28,14 +28,25 @@ export default function LabelBottomNavigation() {
     router.push(newValue);
   };
 
-  const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
       backgroundColor: darkMode ? "#373737ff !important" : "#fff",
-      "& .css-1bped5o-MuiBottomNavigation-root": {},
+
       "& .MuiBottomNavigationAction-wrapper": {
         fontSize: "30px",
         color: darkMode ? "#fff" : "grey",
+        [theme.breakpoints.down(376)]: {
+          width: "50px",
+        },
+      },
+      "& .MuiBottomNavigationAction-root.MuiBottomNavigationAction-iconOnly": {
+        paddingTop: "10px",
+      },
+      "& .MuiBottomNavigationAction-root": {
+        [theme.breakpoints.down(376)]: {
+          minWidth: "50px",
+        },
       },
       "& .MuiBottomNavigationAction-root.Mui-selected": {
         "& .MuiBottomNavigationAction-wrapper": {
@@ -44,7 +55,7 @@ export default function LabelBottomNavigation() {
         },
       },
     },
-  });
+  }));
   const _class = useStyles();
   const { user } = useAuthState();
   return (
