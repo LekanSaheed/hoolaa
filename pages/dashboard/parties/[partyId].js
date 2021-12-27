@@ -134,10 +134,10 @@ const Party = () => {
       },
 
       body: JSON.stringify({
-        tx_ref: "hoolaa23-tx-1920bbtytty",
+        tx_ref: "hoolaa-rt-tx-" + new Date().getTime().toString(),
         amount: "100",
         currency: "NGN",
-        redirect_url: "https://hoolaa.vercel.app/successful",
+        redirect_url: "https://hoolaa.vercel.app/tx",
         payment_options: "card",
         meta: {
           consumer_id: 23,
