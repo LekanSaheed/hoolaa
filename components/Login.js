@@ -155,7 +155,7 @@ const Login = () => {
               toast.error("Please input an email");
             } else if (password === "") {
               toast.error("Please your password");
-            } else if (password.length <= 8) {
+            } else if (password.length < 8) {
               toast.error("Password cannot be less than 8 characters");
             } else if (!email.includes("@")) {
               toast.error("Email not valid");
