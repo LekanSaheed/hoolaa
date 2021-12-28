@@ -7,6 +7,8 @@ import {
   MdFavorite,
   MdNotifications,
   MdNotificationsNone,
+  MdOutlineFavorite,
+  MdOutlineFavoriteBorder,
   MdRestore,
 } from "react-icons/md";
 import { makeStyles } from "@material-ui/core";
@@ -34,8 +36,8 @@ export default function LabelBottomNavigation() {
       backgroundColor: darkMode ? "#373737ff !important" : "#fff",
 
       "& .MuiBottomNavigationAction-wrapper": {
-        fontSize: "30px",
-        color: darkMode ? "#fff" : "grey",
+        fontSize: "25px",
+        color: darkMode ? "#fff" : "#000",
         [theme.breakpoints.down(376)]: {
           width: "50px",
         },
@@ -50,7 +52,7 @@ export default function LabelBottomNavigation() {
       },
       "& .MuiBottomNavigationAction-root.Mui-selected": {
         "& .MuiBottomNavigationAction-wrapper": {
-          fontSize: "50px",
+          fontSize: "45px",
           color: "#8800ff !important",
         },
       },
@@ -72,8 +74,14 @@ export default function LabelBottomNavigation() {
       />
       <BottomNavigationAction
         // label="Favorites"
-        value="/dashboard/settings"
-        icon={<MdFavorite />}
+        value="/dashboard/reserved-parties"
+        icon={
+          value === "/dashboard/reserved-parties" ? (
+            <MdFavorite />
+          ) : (
+            <MdOutlineFavoriteBorder />
+          )
+        }
       />
       <BottomNavigationAction
         // label="Nearby"

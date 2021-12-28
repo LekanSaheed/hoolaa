@@ -39,6 +39,16 @@
   animation: fade 0.9s;
   cursor: pointer;
 }
+.container {
+  padding: 10px;
+  background-color: #fcfcfc;
+}
+.darkContainer {
+  background-color: #242526;
+}
+.darkContainer .partyGroup > div {
+  background-color: #373737ff !important;
+}
 @keyframes fade {
   0% {
     opacity: 0;

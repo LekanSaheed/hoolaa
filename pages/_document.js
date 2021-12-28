@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Hoolaa || Biggest party and reservation app in africa</title>
+          {/* <title>Hoolaa || Biggest party and reservation app in africa</title> */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"

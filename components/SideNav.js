@@ -5,24 +5,27 @@ import { FiPlusCircle } from "react-icons/fi";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { AiOutlineSetting } from "react-icons/ai";
 import { AiOutlineLogout } from "react-icons/ai";
-import { BsCupStraw } from "react-icons/bs";
+import { BsCupStraw, BsUiRadiosGrid } from "react-icons/bs";
 import { useGlobalContext } from "../context/context";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuthState, useAuthDispatch } from "../context/AuthContext";
+import { MdCategory, MdOutlineCategory } from "react-icons/md";
+import { BiUser } from "react-icons/bi";
+import { RiFolderUserLine } from "react-icons/ri";
 export const navLinks = [
-  { icon: <AiOutlineAppstore />, text: "Dashboard", link: "" },
-  { icon: <AiOutlineAppstore />, text: "All Parties", link: "/all-parties" },
-  { icon: <AiOutlineAppstore />, text: "My Parties", link: "/my-parties" },
-  { icon: <AiOutlineAppstore />, text: "Profile", link: "/profile" },
+  { icon: BsUiRadiosGrid, text: "Dashboard", link: "" },
+  { icon: MdOutlineCategory, text: "All Parties", link: "/parties" },
+  { icon: RiFolderUserLine, text: "My Parties", link: "/my-parties" },
+  { icon: BiUser, text: "Profile", link: "/profile" },
   {
-    icon: <BsCupStraw />,
+    icon: BsCupStraw,
     text: "Reserved Parties",
     link: "/reserved-parties",
   },
-  { icon: <AiOutlineSetting />, text: "Settings", link: "/settings" },
-  { icon: <AiOutlineLogout />, text: "Logout", link: "/logout" },
+  { icon: AiOutlineSetting, text: "Settings", link: "/settings" },
+  { icon: AiOutlineLogout, text: "Logout", link: "/logout" },
 ];
 
 const SideNav = () => {
@@ -123,27 +126,33 @@ const SideNav = () => {
       >
         {navLinks.map((nav, id) => {
           return (
-            <Link key={id} href={"/dashboard" + nav.link}>
+            <Link
+              onClick={() => {
+                if (nav.link === "/logout") {
+                  dispatch("LOGOUT");
+                  router.push("/login");
+                } else {
+                  return;
+                }
+              }}
+              key={id}
+              href={"/dashboard" + nav.link}
+            >
               <a
                 className={`${classes.link} ${
                   isToggled ? classes.center_icons : ""
                 }`}
               >
-                <span className={classes.icon}> {nav.icon}</span>
+                <span className={classes.icon}>
+                  <nav.icon />
+                </span>
                 {!isToggled && nav.text}
               </a>
             </Link>
           );
         })}
       </div>
-      <div
-        onClick={() => {
-          dispatch("LOGOUT");
-          router.push("/login");
-        }}
-      >
-        Logout
-      </div>
+      <div onClick={() => {}}>Logout</div>
     </motion.nav>
   );
 };

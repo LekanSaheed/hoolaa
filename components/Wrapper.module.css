@@ -12,6 +12,7 @@
   bottom: 0;
   right: 0;
   left: 0;
+  border-top: solid 1px #37373750;
 }
 @media (min-width: 801px) {
   .mobileButtomNav {

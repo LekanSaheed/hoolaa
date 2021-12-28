@@ -4,9 +4,11 @@ import { useGlobalContext } from "../context/context";
 import classes from "./MobileNav.module.css";
 import { navLinks } from "./SideNav";
 import { useRouter } from "next/router";
-import { MdClose } from "react-icons/md";
+import { MdClose, MdOutlinePostAdd } from "react-icons/md";
 import { Box } from "@mui/system";
 import { BiMoon, BiSun } from "react-icons/bi";
+import { FaAccessibleIcon } from "react-icons/fa";
+import { useAuthDispatch } from "../context/AuthContext";
 
 const itemVariants = {
   closed: {
@@ -29,9 +31,17 @@ const sideVariants = {
   },
 };
 
-const links = [...navLinks, { text: "Create Party", link: "/parties/new" }];
+const links = navLinks.map((l) => l);
+// links.splice(3, 0, );
+links[3] = {
+  icon: MdOutlinePostAdd,
+  text: "Create Party",
+  link: "/parties/new",
+};
+
 const MobileNav = () => {
   const router = useRouter();
+  const dispatch = useAuthDispatch();
   const { isToggleMobile, toggleMobile, toggleTheme, darkMode } =
     useGlobalContext();
   return (
@@ -42,12 +52,12 @@ const MobileNav = () => {
             <motion.aside
               initial={{ width: 0 }}
               animate={{
-                width: 300,
+                width: "300px",
               }}
               exit={{
-                width: 0,
-                marginLeft: -40,
-                transition: { delay: 0.2, duration: 0.1 },
+                // width: 0,
+                marginLeft: -800,
+                transition: { delay: 0.07, duration: 0.07 },
               }}
             >
               <motion.div
@@ -71,21 +81,56 @@ const MobileNav = () => {
                 {links.map((nav, id) => (
                   <div
                     key={id}
+                    className={classes.linkText}
                     onClick={async () => {
                       toggleMobile();
-                      router.push("/dashboard" + nav.link);
+                      if (nav.link === "/logout") {
+                        dispatch("LOGOUT");
+                        router.push("/login");
+                      } else {
+                        router.push("/dashboard" + nav.link);
+                      }
                     }}
                   >
+                    <svg width="0" height="0" style={{ position: "absolute" }}>
+                      <linearGradient
+                        id="blue-gradient"
+                        x1="100%"
+                        y1="100%"
+                        x2="0%"
+                        y2="0%"
+                      >
+                        <stop stopColor="#8800ff" offset="0%" />
+                        <stop stopColor="#DAA520" offset="100%" />
+                      </linearGradient>
+                    </svg>
                     <motion.a
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                      }}
                       whileHover={{ scale: 1.1 }}
                       variants={itemVariants}
                     >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <nav.icon style={{ fill: "url(#blue-gradient)" }} />
+                      </span>{" "}
                       {nav.text}
                     </motion.a>
                   </div>
                 ))}
               </motion.div>
             </motion.aside>
+            <motion.div
+              onClick={() => toggleMobile()}
+              className={classes.closeNav}
+            ></motion.div>
           </motion.div>
         )}
       </AnimatePresence>

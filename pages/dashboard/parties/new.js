@@ -71,6 +71,7 @@ import { IoFastFoodOutline, IoPizzaOutline } from "react-icons/io5";
 import { GiWineBottle } from "react-icons/gi";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import { useGlobalContext } from "../../../context/context";
 function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -88,7 +89,7 @@ function HorizontalLinearStepper() {
   const [state, setState] = useState("");
 
   const [menus, setMenus] = useState([]);
-
+  const { darkMode } = useGlobalContext();
   const steps = ["Select Category", "Party details", "Review"];
   const [loading, setLoading] = useState(false);
   const menuCategories = [
@@ -309,12 +310,7 @@ function HorizontalLinearStepper() {
   };
   console.log(isPrivate);
   return (
-    <Box
-      backgroundColor="#fff"
-      borderRadius="10px"
-      padding="10px"
-      sx={{ width: "100%" }}
-    >
+    <Box borderRadius="10px" padding="10px" sx={{ width: "100%" }}>
       {/* <HoolaLoader /> */}
       {loading && <HoolaLoader />}
       <Stepper

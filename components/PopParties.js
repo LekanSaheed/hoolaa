@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Box } from "@mui/system";
 import classes from "./PopParties.module.css";
-import { Avatar, Button, Skeleton, useMediaQuery } from "@mui/material";
+import { Avatar, Skeleton, useMediaQuery, Button } from "@mui/material";
+// import { Button } from "@m-ui/core";
 import { MdSpaceDashboard } from "react-icons/md";
 import { ImLocation2 } from "react-icons/im";
 import { BsDot, BsFillCalendar2WeekFill } from "react-icons/bs";
@@ -211,6 +212,9 @@ const PopParties = () => {
   const matches = useMediaQuery("(min-width: 801px)");
   return (
     <div className={`${classes.container}  `}>
+      <Button variant="contained" size="large">
+        LOL
+      </Button>
       <Box display="flex" justifyContent="space-between">
         Pop Parties <button className={classes.btn_see}> See All</button>
       </Box>

@@ -8,21 +8,37 @@ import {
   query,
   onSnapshot,
   updateDoc,
+  deleteDoc,
 } from "../../firebase/firebase";
 import Wrapper from "../../components/Wrapper";
 import { Box } from "@mui/system";
 import classes from "./notifications.module.css";
 import { useGlobalContext } from "../../context/context";
-import { Avatar, Divider, useMediaQuery } from "@mui/material";
+import {
+  Avatar,
+  Checkbox,
+  Divider,
+  IconButton,
+  useMediaQuery,
+} from "@mui/material";
 import moment from "moment";
-import { BsCalendarCheckFill, BsCalendarXFill } from "react-icons/bs";
-import { MdNotifications } from "react-icons/md";
+import {
+  BsCalendarCheckFill,
+  BsCalendarXFill,
+  BsTrashFill,
+} from "react-icons/bs";
+import { MdCancel, MdNotifications } from "react-icons/md";
 import { toast } from "react-toastify";
+import { Modal, Dialog, DialogContent } from "@mui/material";
+import { BiTrash } from "react-icons/bi";
+
 const Notifications = () => {
   const { user } = useAuthState();
   const { darkMode } = useGlobalContext();
   const [notifications, setNotifications] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [modal, setModal] = React.useState(false);
+  const [notification, setNotification] = React.useState({});
   const fetchNotifications = async () => {
     const docRef = query(
       collection(db, "notifications"),
@@ -51,14 +67,20 @@ const Notifications = () => {
           const data = { ...change.doc.data(), id: change.doc.id };
 
           let ind = notifications.findIndex((t) => t.id === data.id);
-          notifications[ind] = data;
+          console.log(notifications[ind], "before Change");
+
+          notifications.splice(ind, 1, data);
+          console.log(notifications.splice(ind, 1, data));
+          console.log(notifications[ind], "after Change");
           console.log(data, "Modified");
+
           setLoading(false);
         }
         if (change.type === "removed") {
           const data = { ...change.doc.data(), id: change.doc.id };
           notifications.filter((n) => n.id !== data.id);
           setLoading(false);
+          console.log("removed");
         }
       });
       setLoading(false);
@@ -73,17 +95,76 @@ const Notifications = () => {
     updateDoc(docRef, {
       read: true,
     })
-      .then((status) => {
-        console.log(status);
-        toast.success("Notification Read");
+      .then(() => {
+        console.log("Read");
       })
-      .catch((err) => [console.log(err)]);
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const deleteeNotification = (id) => {
+    const docRef = doc(db, "notifications", id);
+    deleteDoc(docRef)
+      .then(() => {
+        toast.success("Notification Deleted");
+        setModal(false);
+        setNotification({});
+      })
+
+      .catch((err) => toast.error(err.message));
   };
   const matches = useMediaQuery("(max-width: 450px)");
   return (
     <Wrapper>
       {loading && "Loading"}
+      <Modal open={modal}>
+        <div>
+          <Dialog open={modal} fullWidth>
+            <DialogContent>
+              <Box display="flex" justifyContent="space-between">
+                <IconButton
+                  onClick={() => {
+                    setModal(false);
+                    setNotification({});
+                  }}
+                >
+                  <MdCancel />
+                </IconButton>
+                <IconButton
+                  onClick={() => deleteeNotification(notification.id)}
+                >
+                  <BsTrashFill />
+                </IconButton>
+              </Box>
+              {Object.entries(notification).length > 0 && (
+                <Box display="flex" flexDirection="column" gap="7px">
+                  <Box fontWeight="600">
+                    {" "}
+                    {notification.notification.header}
+                  </Box>
+                  {notification.notification.body}
+                </Box>
+              )}
+            </DialogContent>
+          </Dialog>{" "}
+        </div>
+      </Modal>
       <Box padding="15px" display="flex" gap="15px" flexDirection="column">
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          padding="3px 13px 0px 13px"
+        >
+          <Checkbox />{" "}
+          <span>
+            {"Read "}
+            {notifications.length > 0 &&
+              notifications.filter((n) => n.read).length +
+                "/" +
+                notifications.length}
+          </span>
+        </Box>
+
         {notifications.length > 0 &&
           notifications.map((instance) => {
             const notificationTime = new Date(instance.created_At.toDate());
@@ -123,7 +204,11 @@ const Notifications = () => {
                   gap="8px"
                   padding="10px"
                   paddingRight="0"
-                  onClick={() => updateNotification(instance.id)}
+                  onClick={async () => {
+                    await updateNotification(instance.id);
+                    await setNotification(instance);
+                    setModal(true);
+                  }}
                 >
                   {" "}
                   <Box display="flex" gap="8px" width="100%">
@@ -161,7 +246,7 @@ const Notifications = () => {
                       <span
                         className={classes.note}
                         style={{
-                          fontSize: instance.read ? "13px" : "15px",
+                          fontSize: instance.read ? "13px" : "14px",
                           fontWeight: instance.read ? "normal" : "600",
                           color: "#a3a3a3",
                         }}

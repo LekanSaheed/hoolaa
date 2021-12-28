@@ -12,6 +12,7 @@ import { BsCalendarWeekFill, BsStarFill } from "react-icons/bs";
 import { RiVipCrown2Fill, RiVipDiamondFill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { useAuthState } from "../../../../context/AuthContext";
+import { useGlobalContext } from "../../../../context/context";
 const Party = () => {
   const [party, setParty] = useState({});
   const [loading, setLoading] = useState(true);
@@ -21,6 +22,7 @@ const Party = () => {
 
   const router = useRouter();
   const { user } = useAuthState();
+  const { darkMode } = useGlobalContext();
   useEffect(() => {
     setCurrent("all");
     const checkAuth = async () => {
@@ -124,7 +126,11 @@ const Party = () => {
   return (
     <Wrapper>
       {" "}
-      <Box padding="10px" backgroundColor="#fcfcfc">
+      <div
+        className={`${classes.container} ${
+          darkMode ? classes.darkContainer : ""
+        }`}
+      >
         {Object.entries(party).length > 0 && (
           <>
             <div className={classes.partyGroup}>
@@ -376,7 +382,7 @@ const Party = () => {
             </div>
           </>
         )}
-      </Box>
+      </div>
     </Wrapper>
   );
 };

@@ -12,3 +12,9 @@
     -webkit-box-orient: vertical;
   }
 }
+.notification {
+  cursor: pointer;
+}
+.notification:hover {
+  background-color: #37373715;
+}

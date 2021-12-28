@@ -17,6 +17,7 @@ import {
   limit,
   updateDoc,
   arrayUnion,
+  deleteDoc,
 } from "firebase/firestore";
 
 import {
@@ -73,4 +74,5 @@ export {
   updateDoc,
   arrayUnion,
   signInWithCustomToken,
+  deleteDoc,
 };
