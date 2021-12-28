@@ -136,42 +136,48 @@ export default function BasicTabs({ all, parties, loading, users }) {
                       style={{ width: "100%", opacity: 0.2 }}
                     />
                   </div>
-                  <div>No result</div>
                 </Box>
               )}
             </div>
             <div>
               <Box> Buddies</Box>
-              {all.users.length > 0
-                ? all.users.map((r) => {
-                    return (
-                      <div
-                        onClick={() => {
-                          setSearch("");
-                          router.push({
-                            pathname: "/dashboard/parties/" + r.id,
-                          });
-                        }}
-                        key={r.id}
-                        className={`${classes.party} ${
-                          darkMode ? classes.darkParty : ""
-                        }`}
-                      >
-                        <Box display="flex" alignItems="center" gap="10px">
-                          {" "}
-                          <Avatar src={r.displayPics} />
-                          <Box display="flex" flexDirection="column">
-                            <span> {`${r.firstName} ${r.lastName}`}</span>
-                            <span style={{ fontSize: "11px" }}>
-                              {" "}
-                              @{r.username}
-                            </span>
-                          </Box>
+              {all.users.length > 0 ? (
+                all.users.map((r) => {
+                  return (
+                    <div
+                      onClick={() => {
+                        setSearch("");
+                        router.push({
+                          pathname: "/dashboard/parties/" + r.id,
+                        });
+                      }}
+                      key={r.id}
+                      className={`${classes.party} ${
+                        darkMode ? classes.darkParty : ""
+                      }`}
+                    >
+                      <Box display="flex" alignItems="center" gap="10px">
+                        {" "}
+                        <Avatar src={r.displayPics} />
+                        <Box display="flex" flexDirection="column">
+                          <span> {`${r.firstName} ${r.lastName}`}</span>
+                          <span style={{ fontSize: "11px" }}>
+                            {" "}
+                            @{r.username}
+                          </span>
                         </Box>
-                      </div>
-                    );
-                  })
-                : "No result"}
+                      </Box>
+                    </div>
+                  );
+                })
+              ) : (
+                <div style={{ width: "100%" }}>
+                  <img
+                    src="/noresult.svg"
+                    style={{ width: "100%", opacity: 0.2 }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </TabPanel>
@@ -193,21 +199,28 @@ export default function BasicTabs({ all, parties, loading, users }) {
             : "No Result"}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {users.length > 0
-            ? users.map((r) => {
-                return (
-                  <div
-                    onClick={() => {
-                      setSearch("");
-                      router.push({ pathname: "/dashboard/parties/" + r.id });
-                    }}
-                    key={r.id}
-                  >
-                    {r.partyName}
-                  </div>
-                );
-              })
-            : "No Result"}
+          {users.length > 0 ? (
+            users.map((r) => {
+              return (
+                <div
+                  onClick={() => {
+                    setSearch("");
+                    router.push({ pathname: "/dashboard/parties/" + r.id });
+                  }}
+                  key={r.id}
+                >
+                  {r.partyName}
+                </div>
+              );
+            })
+          ) : (
+            <div style={{ width: "400px" }}>
+              <img
+                src="/noresult.svg"
+                style={{ width: "100%", opacity: 0.2 }}
+              />
+            </div>
+          )}
         </TabPanel>
       </div>
     </Box>

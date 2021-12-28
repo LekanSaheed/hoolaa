@@ -83,7 +83,7 @@ const Header = () => {
     setUserResult(isMatchUsers);
   };
   return (
-    <div>
+    <div className={classes.stickyHeader}>
       <div
         className={`${classes.header} ${
           darkMode ? classes.dark : classes.light
@@ -163,7 +163,7 @@ const Header = () => {
             !isToggled ? classes.shrinkSearch : classes.expandSearch
           } ${darkMode ? classes.darkContainer : ""}`}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.1, duration: 0.2 }}
+          transition={{ delay: 0.02, duration: 0.03 }}
         >
           Search results for <span style={{ fontWeight: "600" }}>{search}</span>
           <br />
