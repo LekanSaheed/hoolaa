@@ -12,6 +12,19 @@
   background-color: #373737ff !important;
   color: #fff;
 }
+.darkNav .center_icons span {
+  color: #b561ff !important;
+}
+.darkNav .nav_container {
+  background-color: #24252645 !important;
+}
+.darkNav .btn_start {
+  color: #b561ff !important;
+  border-color: #b561ff !important;
+}
+.darkNav .clear_background {
+  background-color: transparent !important;
+}
 .avatar {
   padding: 10px;
 }
@@ -40,9 +53,10 @@
 }
 .link {
   display: flex;
-  gap: 10px;
+  padding: 8px;
+  gap: 6px;
   align-items: center;
-  font-size: 13px;
+  font-size: 15px;
   white-space: nowrap;
 }
 .icon {
@@ -70,6 +84,8 @@
   .center_icons .icon {
     font-size: 25px !important;
     color: #8800ff85;
+    transform: scale(0.8);
+    transition: all 0.2s;
   }
   .shrinkNav {
     width: 100px;
@@ -87,13 +103,83 @@
   .nav_container {
     background-color: #efefef75;
     border-radius: 10px;
-    padding: 17px 14px;
+    padding: 25px 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     width: 100%;
     align-self: flex-end;
-    height: 100%;
+    height: auto;
+    overflow-y: hidden;
+  }
+  .nav_container::-webkit-scrollbar {
+    background-color: transparent !important;
+  }
+
+  .nav_container::-webkit-scrollbar-thumb {
+    background-color: #8800ff;
+    border-radius: 50px;
+    /* box-shadow: 0 0 10px rgba(0 0 0 /17%); */
+    border: solid 6px #efefef75;
+    background-clip: padding-box;
+    animation: fade 0.7s;
+    transition: 0.4s;
+  }
+  .nav_container::-webkit-scrollbar-corner {
+    border-radius: 10px;
+  }
+  .darkNav .nav_container::-webkit-scrollbar {
+    background-color: transparent !important;
+  }
+
+  .darkNav .nav_container::-webkit-scrollbar-thumb {
+    background-color: #8800ff55;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0 0 0 /17%);
+    border: solid 6px transparent;
+    background-clip: padding-box;
+    animation: fade 0.7s;
+    transition: 0.4s;
+  }
+  .darkNav .nav_container::-webkit-scrollbar-corner {
+    border-radius: 10px;
+  }
+  .nav_container:hover {
+    overflow-y: auto;
+  }
+  .link:hover {
+    background-color: #8800ff;
+    border-radius: 10px;
+    color: white;
+    transition: 0.2s;
+  }
+  .link:hover .icon {
+    color: white !important;
+    transition: 0.2s;
+  }
+  .center_icons:hover {
+    background-color: transparent;
+    transition: 0.2s;
+  }
+  .center_icons:hover .icon {
+    color: violet !important;
+    transition: 0.2s;
+  }
+  .active {
+    color: rgb(255, 164, 255) !important;
+    transition: all 0.2s;
+  }
+  .active .icon {
+    color: rgb(255, 164, 255) !important;
+    transition: all 0.2s;
+  }
+  .active > .icon {
+    transform: scale(1.2);
+    transition: all 0.2s;
+    transition: 0.3s;
+  }
+  .darkNav .active .icon {
+    color: rgb(255, 164, 255) !important;
   }
   .clear_background {
     background-color: transparent;

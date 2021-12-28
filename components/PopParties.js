@@ -210,6 +210,7 @@ const PopParties = () => {
     );
   };
   const matches = useMediaQuery("(min-width: 801px)");
+  console.log(parties.slice(0, 10), "Slice");
   return (
     <div className={`${classes.container}  `}>
       <Button variant="contained" size="large">
@@ -250,12 +251,12 @@ const PopParties = () => {
           </Box>
         )}{" "}
         {parties.length === 0 && !loading && "No parties"}
-        {parties.slice(0, 11).map((party, id) => {
+        {parties.slice(0, 10).map((party, id) => {
           const address = `${party.location.street}, ${party.location.city} ${party.location.state}`;
           // if (address.length > 26) {
           //   address = address.slice(0, 26).concat("...");
           // }
-          console.log(address.length);
+
           return (
             <motion.div
               // initial={{ opacity: 0 }}

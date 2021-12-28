@@ -724,9 +724,10 @@ function HorizontalLinearStepper() {
 }
 
 const NewParty = () => {
+  const { darkMode } = useGlobalContext();
   return (
     <Wrapper>
-      <div className={classes.bc}>
+      <div className={`${classes.bc} ${darkMode ? classes.darkBc : ""}`}>
         <HorizontalLinearStepper />
       </div>
     </Wrapper>

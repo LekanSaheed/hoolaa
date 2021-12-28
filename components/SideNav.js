@@ -141,7 +141,13 @@ const SideNav = () => {
               <a
                 className={`${classes.link} ${
                   isToggled ? classes.center_icons : ""
-                }`}
+                } ${
+                  router.pathname === "/dashboard" + nav.link
+                    ? classes.active
+                    : router.pathname === "/dashboard" && nav.link === ""
+                    ? classes.active
+                    : ""
+                } `}
               >
                 <span className={classes.icon}>
                   <nav.icon />

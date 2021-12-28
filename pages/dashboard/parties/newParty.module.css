@@ -17,6 +17,12 @@
   justify-content: space-between;
   box-shadow: 0 20px 26px -13px rgba(22, 92, 255, 0.541);
 }
+.darkBc {
+  background-color: #242526;
+}
+.darkBc .css-1s2u09g-control {
+  background-color: #373737ff !important;
+}
 .cardCont {
   height: 100%;
 }

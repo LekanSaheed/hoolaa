@@ -66,6 +66,8 @@ export default function handler(req, res) {
 
   if (req.method === "GET") {
     const db = getFirestore();
+    const isNotStarted = [];
+    const isNotEnded = [];
     const fetchAndStart = async () => {
       const docRef = db.collection("parties");
       const toUpdate = [];
@@ -87,29 +89,29 @@ export default function handler(req, res) {
                   isEnded: false,
                 })
                 .then(() => {
+                  db.collection("notifications")
+                    .doc()
+                    .set({
+                      userId: data.created_By,
+                      type: "event_start",
+                      notification: {
+                        header: `${data.category.label} has started`,
+                        body: `Your ${data.category.label} (${
+                          data.partyName
+                        }) scheduled to hold at: ${startdate.format(
+                          "ddd, MMM DD, YYYY hh:mm:a"
+                        )} has started `,
+                        attachment: null,
+                      },
+                      created_At: Timestamp.fromDate(new Date()),
+                      read: false,
+                    })
+                    .catch((err) => console.log(err.message));
                   db.collection("users")
                     .doc(data.created_By)
                     .get()
                     .then((doc) => {
                       if (doc.exists) {
-                        db.collection("notifications")
-                          .doc()
-                          .set({
-                            userId: data.created_By,
-                            type: "event_start",
-                            notification: {
-                              header: `${data.category.label} has started`,
-                              body: `Your ${data.category.label} (${
-                                data.partyName
-                              }) scheduled to hold at: ${startdate.format(
-                                "ddd, MMM DD, YYYY hh:mm:a"
-                              )} has started `,
-                              attachment: null,
-                            },
-                            created_At: Timestamp.fromDate(new Date()),
-                            read: false,
-                          })
-                          .catch((err) => console.log(err.message));
                         sendAlertMail({
                           email: doc.data().email,
                           name: doc.data().firstName,
@@ -121,20 +123,18 @@ export default function handler(req, res) {
                           <div style='padding: 10px'>
                             ${data.partyName} 
                           </div>
-                        <b>Which started at:</b> ${startdate.format(
+                        <b>Scheduled to start at:</b> ${startdate.format(
                           "hh:mm:a on ddd, MMM DD, YYYY "
-                        )} has Ended
+                        )} has started
                             </div>`,
-                          status: "end",
+                          status: " start",
                         }).catch(console.error);
                       }
                     });
                 })
                 .catch((err) => {
                   console.log(err);
-                  res
-                    .status(400)
-                    .json({ success: false, message: err.message });
+                  res.status(400).end(err.message);
                 });
             }
 
@@ -142,11 +142,11 @@ export default function handler(req, res) {
             // toUpdate.push(moment(data.start_date.toDate()));
           });
 
-          res.status(200).json(toUpdate);
+          isNotStarted.push(toUpdate);
         })
         .catch((err) => {
           console.log(err);
-          res.status(400).json({ success: false, message: err.message });
+          res.status(400).end(err);
         });
     };
     const fetchAndEnd = async () => {
@@ -173,29 +173,29 @@ export default function handler(req, res) {
                   isEnded: true,
                 })
                 .then(() => {
+                  db.collection("notifications")
+                    .doc()
+                    .set({
+                      userId: data.created_By,
+                      type: "event_end",
+                      notification: {
+                        header: `${data.category.label} has ended`,
+                        body: `Your ${data.category.label} (${
+                          data.partyName
+                        }) which started at: ${startdate.format(
+                          "hh:mm:a on ddd, MMM DD, YYYY "
+                        )} has ended `,
+                        attachment: null,
+                      },
+                      created_At: Timestamp.fromDate(new Date()),
+                      read: false,
+                    })
+                    .catch((err) => console.log(err.message));
                   db.collection("users")
                     .doc(data.created_By)
                     .get()
                     .then((doc) => {
                       if (doc.exists) {
-                        db.collection("notifications")
-                          .doc()
-                          .set({
-                            userId: data.created_By,
-                            type: "event_end",
-                            notification: {
-                              header: `${data.category.label} has ended`,
-                              body: `Your ${data.category.label} (${
-                                data.partyName
-                              }) which started at: ${startdate.format(
-                                "hh:mm:a on ddd, MMM DD, YYYY "
-                              )} has ended `,
-                              attachment: null,
-                            },
-                            created_At: Timestamp.fromDate(new Date()),
-                            read: false,
-                          })
-                          .catch((err) => console.log(err.message));
                         sendAlertMail({
                           email: doc.data().email,
                           name: doc.data().firstName,
@@ -211,16 +211,14 @@ export default function handler(req, res) {
                           "hh:mm:a on ddd, MMM DD, YYYY "
                         )} has Ended
                             </div>`,
-                          status: "bend",
+                          status: " end",
                         }).catch(console.error);
                       }
                     });
                 })
                 .catch((err) => {
                   console.log(err);
-                  res
-                    .status(400)
-                    .json({ success: false, message: err.message });
+                  res.status(400).end(err);
                 });
             }
 
@@ -228,11 +226,15 @@ export default function handler(req, res) {
             // toUpdate.push(moment(data.start_date.toDate()));
           });
 
-          res.status(200).json(toUpdate);
+          isNotEnded.push(toUpdate);
+          res.status(200).json({
+            success: true,
+            data: { isNotStarted: isNotStarted, isNotEnded: isNotEnded },
+          });
         })
         .catch((err) => {
           console.log(err);
-          res.status(400).json({ success: false, message: err.message });
+          res.status(400).end(err);
         });
     };
     fetchAndStart();
