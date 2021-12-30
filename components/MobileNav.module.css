@@ -21,7 +21,7 @@
 }
 .backgroundCont {
   position: fixed;
-  z-index: 1000;
+  z-index: 10000000;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.653);
   display: flex;
