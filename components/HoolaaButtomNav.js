@@ -52,7 +52,7 @@ export default function LabelBottomNavigation() {
       },
       "& .MuiBottomNavigationAction-root.Mui-selected": {
         "& .MuiBottomNavigationAction-wrapper": {
-          fontSize: "45px",
+          fontSize: "30px",
           color: "#8800ff !important",
         },
       },
