@@ -57,10 +57,13 @@ function MyApp({ Component, pageProps }) {
     >
       <AuthProvider>
         <PrivateRoute protectedRoutes={protectedRoutes}>
-          <ToastContainer
-            autoClose={3000}
-            theme={state.darkMode ? "colored" : "light"}
-          />
+          <div style={{ position: "absolute", zIndex: "378900" }}>
+            {" "}
+            <ToastContainer
+              autoClose={3000}
+              theme={state.darkMode ? "colored" : "light"}
+            />
+          </div>
           <Component
             className={state.darkMode ? classes.darkBody : classes.light}
             {...pageProps}

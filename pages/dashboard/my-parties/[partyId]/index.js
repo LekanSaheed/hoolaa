@@ -2,7 +2,14 @@ import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Wrapper from "../../../../components/Wrapper";
-import { db, getDoc, doc } from "../../../../firebase/firebase";
+import {
+  db,
+  getDoc,
+  doc,
+  collection,
+  getDocs,
+  onSnapshot,
+} from "../../../../firebase/firebase";
 import { Avatar, Button, TextField, useMediaQuery } from "@mui/material";
 import classes from "./party.module.css";
 import moment from "moment";
@@ -19,11 +26,35 @@ const Party = () => {
   const [menus, setMenus] = useState([]);
   const [current, setCurrent] = useState("");
   const [search, setSearch] = useState("");
+  const [reservations, setReservations] = useState([]);
 
   const router = useRouter();
   const { user } = useAuthState();
   const { darkMode } = useGlobalContext();
   useEffect(() => {
+    const fetchReservers = async () => {
+      const _reservations = [];
+      const temp = [];
+      const docRef = collection(db, "reservations");
+      onSnapshot(docRef, (snaps) => {
+        snaps.docChanges().forEach(async (change) => {
+          if (change.type === "added") {
+            console.log(change.doc.data(), "chnage");
+            const data = { ...change.doc.data(), id: change.doc.id };
+            await _reservations.push(data);
+            console.log(_reservations, "Reserb");
+            _reservations.forEach((res) => {
+              const userRef = doc(db, "users", res.created_By);
+              getDoc(userRef).then(async (_doc) => {
+                await temp.push({ ...res, reserverDetails: _doc.data() });
+                console.log(temp, "temp");
+              });
+            });
+          }
+        });
+      });
+    };
+    fetchReservers();
     setCurrent("all");
     const checkAuth = async () => {
       const stat = false;
@@ -31,13 +62,13 @@ const Party = () => {
       await getDoc(docRef)
         .then((_doc) => {
           if (_doc.exists()) {
-            console.log(_doc.data());
+            // console.log(_doc.data());
             if (_doc.data().created_By !== user.user.uid) {
               toast.error("You are not authorized");
               router.push("/dashboard/my-parties");
               stat = false;
             } else {
-              console.log(_doc.data().created_By);
+              // console.log(_doc.data().created_By);
               stat = true;
             }
           } else {
@@ -62,11 +93,11 @@ const Party = () => {
 
             setParty(data);
             data.menus ? setMenus(data.menus) : setMenus([]);
-            console.log(data);
+            // console.log(data);
             setLoading(false);
           } else {
             setLoading(false);
-            console.log("Doesnt exist");
+            // console.log("Doesnt exist");
           }
         })
         .catch((err) => {
@@ -104,6 +135,7 @@ const Party = () => {
 
     console.log(match);
     setMenus(match);
+
     if (current !== "all" && !e && party.menus) {
       const filterCurrentCategory = party.menus.filter(
         (menu) => menu.category.value === current
@@ -122,7 +154,7 @@ const Party = () => {
     { label: "Side Dishes", params: "side_dishes" },
   ];
   const media = useMediaQuery("(max-width:767px)");
-  console.log(media);
+
   return (
     <Wrapper>
       {" "}
