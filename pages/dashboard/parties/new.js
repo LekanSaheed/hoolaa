@@ -64,7 +64,6 @@ import { GiWineBottle } from "react-icons/gi";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useGlobalContext } from "../../../context/context";
-
 function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
