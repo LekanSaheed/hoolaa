@@ -1,0 +1,125 @@
+.flex_container {
+  display: flex;
+  flex-direction: column;
+}
+.img_container {
+  max-width: 100%;
+}
+.img_container img {
+  width: 100%;
+  max-height: 320px;
+}
+.creator {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.party_details {
+  padding: 10px;
+  background-color: rgb(255, 245, 253) !important;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  margin: 20px;
+  margin-top: -100px;
+  min-height: 200px;
+}
+.date_container {
+  background-image: linear-gradient(
+    50deg,
+    rgba(255, 166, 0, 0.2),
+    rgba(255, 166, 0, 0.2),
+    #8800ff95
+  );
+  color: #fff;
+  border-radius: 15px;
+  display: flex;
+  padding: 11px;
+}
+.date_container_flex_1 {
+  background-color: #6200b8;
+  display: flex;
+  width: 80%;
+  padding: 10px;
+  border-radius: 13px;
+}
+
+.date_day {
+  color: #ff9900;
+  text-align: center;
+}
+.date_month {
+  font-weight: bold;
+  text-align: center;
+}
+.party_name {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+.main_details {
+  margin: 20px;
+  margin-top: 0;
+  background-color: rgb(255, 245, 253);
+  padding: 20px;
+  min-height: 200px;
+  border-radius: 20px;
+}
+.attendee_container {
+  display: flex;
+  gap: 15px;
+}
+.attendee_container div {
+  padding: 20px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 20px;
+  justify-content: center;
+}
+.main_details_icon {
+  font-size: 28px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.icon1 {
+  background-color: rgba(30, 143, 255, 0.145);
+  color: rgb(63, 30, 182);
+}
+.icon2 {
+  color: rgb(206, 37, 37);
+  background: rgba(206, 37, 37, 0.152);
+}
+.footer {
+  display: flex;
+  padding: 10px;
+  height: 103px;
+  position: sticky;
+  z-index: 2;
+  bottom: 0;
+  /* bottom: 56px; */
+  background-color: #fff;
+  /* color: #fff; */
+  justify-content: space-between;
+  align-items: center;
+}
+.btn_menu {
+  padding: 13px 20px;
+  font-weight: 500;
+  font-size: 13px;
+  border: none;
+  background-color: #ff9900;
+  box-shadow: 0 2px 10px rgba(0 0 0 /17%);
+  border-radius: 20px;
+  color: #fff;
+  font-family: Montserrat;
+}
+
+@media (min-width: 1024px) {
+}

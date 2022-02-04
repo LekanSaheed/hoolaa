@@ -1,0 +1,42 @@
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import PopParties from "../../components/PopParties";
+import Wrapper from "../../components/Wrapper";
+import { useAuthState } from "../../context/AuthContext";
+import { getAuth, onAuthStateChanged } from "../../firebase/firebase";
+
+const Dashboard = () => {
+  const isLoggedIn = () => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        // ...
+      } else {
+        // User is signed out
+        // ...
+        console.log("No user");
+      }
+    });
+  };
+  const { user, authenticated } = useAuthState();
+  const router = useRouter();
+  useEffect(() => {
+    console.log(user);
+    if (!authenticated) {
+      router.push("/login");
+    }
+  }, [user]);
+  return (
+    <div>
+      <Wrapper>
+        <PopParties />
+      </Wrapper>
+    </div>
+  );
+};
+
+export default Dashboard;

@@ -1,0 +1,219 @@
+.cover_img {
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  border: solid 2px #efefef;
+}
+.img_con {
+  padding: 20px;
+  background-color: white;
+}
+.partyGroup {
+  display: flex;
+  flex-direction: column;
+}
+.party_name {
+  font-weight: 600;
+}
+.menuContainer {
+  padding: 10px;
+  padding-top: 20px;
+}
+.cat_flex {
+  display: grid;
+  overflow-x: scroll;
+  grid-template-columns: repeat(5, 150px);
+  flex-wrap: nowrap;
+  grid-gap: 13px;
+  padding: 10px 0px;
+}
+.cat_flex div {
+  padding: 10px;
+  background-color: #efefef;
+  color: black;
+  font-weight: 600;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 0 50px -18px black;
+  transition: all 0.3s;
+  animation: fade 0.9s;
+  cursor: pointer;
+}
+.container {
+  padding: 10px;
+  background-color: #fcfcfc;
+}
+.darkContainer {
+  background-color: #242526;
+}
+.darkContainer .partyGroup > div {
+  background-color: #373737ff !important;
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.menu_header {
+  font-weight: 600;
+  font-size: 23px;
+}
+.active {
+  background-color: #8800ff16 !important;
+}
+.username {
+  font-size: 12px;
+}
+.menu {
+  display: flex;
+  gap: 20px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin: 20px 12px;
+  transition: 0.3s;
+}
+.detail_flex {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.menu_details {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  font-weight: 600;
+  align-items: center;
+}
+.menu:hover {
+  transform: scale(1.03);
+  transition: 0.3s;
+}
+.flex_list {
+  display: flex;
+  flex-direction: column;
+}
+.type_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu_type {
+  font-size: 10px;
+  padding: 2px;
+  border-radius: 7px;
+  text-align: center;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+}
+.menu_price {
+  letter-spacing: 1px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+.menu_price::before {
+  content: "₦";
+}
+.vvip {
+  background-color: gold;
+}
+.regular {
+  background-color: #8800ff;
+  color: white;
+}
+.vip {
+  background-color: orangered;
+  color: white;
+}
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+
+  padding: 9px;
+  border-radius: 50%;
+}
+.icon1 {
+  color: #8800ff;
+  background-color: #8800ff15;
+}
+.icon2 {
+  color: dodgerblue;
+  background-color: #1e90ff15;
+}
+.icon3 {
+  color: #ff6d6d;
+  background-color: #ff424215;
+}
+.icon4 {
+  color: #76ba1b;
+  background-color: #76ba1b15;
+}
+.no_menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.no_menu img {
+  width: 90%;
+  height: 300px;
+}
+.float_btn {
+  position: fixed !important;
+  bottom: 0px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  padding: 10px;
+}
+@media (min-width: 801px) {
+  .menu_header {
+    font-size: 23px;
+  }
+  .no_menu {
+    width: 100%;
+  }
+  .no_menu img {
+    width: 300px;
+    height: 250px;
+  }
+  .icon {
+    font-size: 23px;
+    padding: 10px;
+  }
+  .partyGroup {
+    flex-direction: row;
+  }
+  .cover_img {
+    height: 300px !important;
+    border-radius: 10px !important;
+  }
+  .float_btn {
+    position: static !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .img_con {
+    width: 100%;
+  }
+  .flex_list {
+    flex-direction: row;
+    width: 100%;
+  }
+  .menuContainer {
+    width: 60%;
+  }
+  .no_menu {
+    width: 100%;
+  }
+}
