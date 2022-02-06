@@ -20,12 +20,17 @@
 .input {
   width: 100%;
   border-radius: 4px;
-  padding: 8px;
+  padding: 10px;
   font-size: 16px;
   border: solid 1px hsl(0, 0%, 80%);
 }
 .input:focus {
-  outline: solid 1px #8800ff;
+  box-shadow: 0 0 0 1pt #8800ff;
+  outline: none;
+}
+.darkBc .input {
+  background-color: #373737ff;
+  color: #efefef;
 }
 .darkBc {
   background-color: #242526;

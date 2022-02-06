@@ -256,13 +256,18 @@ function HorizontalLinearStepper() {
   console.log(start_date);
   const useStyles = makeStyles((theme) => ({
     root: {
-      "& .css-qivjh0-MuiStepLabel-label": {
+      "& .MuiStepLabel-label": {
+        color: darkMode ? "#efefef" : "initial",
         [theme.breakpoints.down(767)]: {
           fontSize: "10px !important",
         },
       },
-      "&.MuiStepper-root": {
+      "& .MuiStepIcon-root.MuiStepIcon-active": {
+        color: "#8800ff",
+      },
+      "& .MuiStepper-root": {
         marginBottom: "20px !important",
+        background: darkMode ? "#242526" : "#fff",
         [theme.breakpoints.down(767)]: {
           padding: "0px !important",
         },
@@ -271,11 +276,8 @@ function HorizontalLinearStepper() {
         outline: "none",
         border: "none",
       },
-      "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active": {
-        color: "#8800ff99 !important",
-      },
-      "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed": {
-        color: "goldenrod !important",
+      "& .MuiStepIcon-root.MuiStepIcon-completed": {
+        color: "#5cb85c !important",
       },
       "& .Mui-focused": {
         border: "none !important",
@@ -283,15 +285,15 @@ function HorizontalLinearStepper() {
         outline: "none !important",
       },
       "& .MuiInputBase-root": {
-        fontFamily: "washeim",
+        fontFamily: "Montserrat",
       },
       "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: "red  !important",
-        backgroundColor: "red",
+        borderColor: "#8800ff  !important",
+        // backgroundColor: "red",
         outline: "none",
       },
       "&.Mui-focused fieldset": {
-        borderColor: "red !important",
+        borderColor: "#8800ff !important",
       },
       "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root": {
         // color: "#8800ff",
@@ -305,12 +307,12 @@ function HorizontalLinearStepper() {
       // borderColor: "#8800ff !important",
       fontFamily: "washeim !important",
       "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: "red  !important",
-        backgroundColor: "red",
+        borderColor: "#8800ff  !important",
+        // backgroundColor: "red",
         outline: "none",
       },
       "&.Mui-focused fieldset": {
-        borderColor: "red !important",
+        borderColor: "#8800ff !important",
       },
     },
     label: {
@@ -326,7 +328,12 @@ function HorizontalLinearStepper() {
   };
   console.log(isPrivate);
   return (
-    <Box borderRadius="10px" padding="10px" sx={{ width: "100%" }}>
+    <Box
+      borderRadius="10px"
+      padding="10px"
+      sx={{ width: "100%" }}
+      className={myclass.root}
+    >
       {/* <HoolaLoader /> */}
       {loading && <HoolaLoader />}
       <Stepper
@@ -502,7 +509,12 @@ function HorizontalLinearStepper() {
                     value={start_date}
                     onChange={(e) => setStartDate(e._d)}
                     renderInput={(params) => (
-                      <TextField {...params} variant="outlined" />
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      />
                     )}
                   />
                   {/* <div className={classes.lgDate}>
@@ -523,25 +535,21 @@ function HorizontalLinearStepper() {
                     />
                   </div> */}
                 </LocalizationProvider>
-                <TextField
+                <input
                   required
-                  variant="outlined"
+                  className={classes.input}
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
                   placeholder="Street"
-                  fullWidth
-                  size="small"
                 />
-                <TextField
+                <input
+                  className={classes.input}
                   required
-                  variant="outlined"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="City"
-                  fullWidth
-                  size="small"
                 />
-                <Select
+                <ThemedSelect
                   options={naijaStates}
                   value={state}
                   onChange={(e) => setState(e)}
