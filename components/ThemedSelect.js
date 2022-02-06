@@ -18,13 +18,16 @@ const {darkMode} = useGlobalContext()
         menuPortal: (base) => ({
           ...base,
           zIndex: 130,
-          backgroundColor: darkMode ? "373737ff" : "initial"
+          background: darkMode ? "373737ff" : "initial"
         }),
 
         control: (base, state) => ({
           ...base,
           minHeight: "43px",
           color: "#000",
+
+background: darkMode ? "373737ff" : "initial",
+
           boxShadow: state.isFocused ? "0 0 0 1px #8800ff" : "none",
           "&:hover": {
             borderColor: state.isFocused ? "#8800ff" : "#a7a7a7",
