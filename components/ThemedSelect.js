@@ -34,6 +34,8 @@ option: (styles, {isFocused, isSelected}) => ({
         control: (base, state) => ({
           ...base,
           minHeight: "43px",
+           color: darkMode ? "#fff !important" : "#000",
+fontSize: "16px"
          
 
 background: darkMode ? "#373737ff" : "initial",
