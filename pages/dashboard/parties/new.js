@@ -95,8 +95,9 @@ function HorizontalLinearStepper() {
   const { Option } = components;
   const IconOption = (props) => (
     <Option {...props}>
-      <Box display="flex" gap="10px">
+      <Box display="flex" justifyContent="space-between" gap="10px">
         {" "}
+        {props.data.label}
         <span
           style={{
             display: "flex",
@@ -104,10 +105,8 @@ function HorizontalLinearStepper() {
             justifyContent: "center",
           }}
         >
-          {" "}
           {props.data.icon}
-        </span>{" "}
-        {props.data.label}
+        </span>
       </Box>
     </Option>
   );
@@ -434,7 +433,7 @@ function HorizontalLinearStepper() {
                 </Box>
                 <br />
                 <Box>
-                  <label className={classes.label}>Enter party Name </label>
+                  <label className={classes.label}>Party Name </label>
                   <input
                     className={classes.input}
                     ref={nameRef}
@@ -446,13 +445,16 @@ function HorizontalLinearStepper() {
                 <br />
 
                 <Box>
-                  <label className={classes.label}>Choose a category</label>
+                  <label className={classes.label}>Category</label>
                   <ThemedSelect
                     value={category}
                     options={cards}
                     onChange={(e) => setCategory(e)}
                     components={{ Option: IconOption }}
                     placeholder="Select category"
+                    // getOptionLabel={e => (
+                    //   <div style={{display: 'flex', alignItems: 'center'}}
+                    // )}
                   />
                 </Box>
                 {/* <div className={classes.listContainer}>

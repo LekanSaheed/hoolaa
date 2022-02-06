@@ -36,6 +36,7 @@ const ThemedSelect = (props) => {
               : "inherit",
           padding: "22px",
           borderBottom: darkMode ? "solid 1px #efefef25" : "solid 1px #efefef",
+          fontFamily: "Delius",
         }),
 
         menu: (base) => ({
@@ -61,12 +62,14 @@ const ThemedSelect = (props) => {
         }),
         singleValue: (base) => ({
           ...base,
-          color: darkMode ? "#efefef !important" : "#000",
+          color: darkMode ? "#8800ff !important" : "#8800ff",
+          fontWeight: "600",
         }),
 
         control: (base, state) => ({
           ...base,
           minHeight: "43px",
+          borderRadius: "10px",
           color: darkMode ? "#fff !important" : "#000",
           fontSize: "16px",
 
