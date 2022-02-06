@@ -24,8 +24,9 @@
 .input {
   width: 100%;
   padding: 10px;
-  border: solid 1px #dadada;
+  border: solid 1px #a7a7a7;
   border-radius: 4px;
+  font-size: 16px;
 }
 .input:focus {
   outline: solid 1px #8800ff;
