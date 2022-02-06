@@ -16,7 +16,8 @@ import {
   arrayUnion,
   Timestamp,
 } from "../../../../firebase/firebase";
-import Select, { components } from "react-select";
+import ThemedSelect from "../../../../components/ThemedSelect";
+import { components } from "react-select";
 import { IoFastFoodOutline, IoPizzaOutline } from "react-icons/io5";
 import { GiWineBottle } from "react-icons/gi";
 import { motion } from "framer-motion";
@@ -224,7 +225,7 @@ const AddNew = () => {
             </Box>
             <Box>
               <label className={classes.label}>Type</label>
-              <Select
+              <ThemedSelect
                 options={types}
                 value={menu.type}
                 placeholder="Select Type"
@@ -239,7 +240,7 @@ const AddNew = () => {
             </Box>
             <Box>
               <label className={classes.label}>Category</label>
-              <Select
+              <ThemedSelect
                 options={menuCategories}
                 value={menu.category}
                 placeholder="Select Category"

@@ -29,9 +29,9 @@
   font-size: 16px;
 }
 .input:focus {
-  outline: solid 1px #8800ff;
-  outline-radius: 4px;
+  box-shadow: 0 0 0 1pt #8800ff;
   -moz-outline-radius: 4px;
+  outline: none;
 }
 
 .flex {
