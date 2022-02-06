@@ -1,6 +1,8 @@
 import Select from "react-select";
+import {useGlobalContext} from "../context/context"
 
 const ThemedSelect = (props) => {
+const {darkMode} = useGlobalContext()
   return (
     <Select
       theme={(theme) => ({
