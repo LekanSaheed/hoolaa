@@ -18,7 +18,7 @@ const {darkMode} = useGlobalContext()
         menuPortal: (base) => ({
           ...base,
           zIndex: 130,
-          background: darkMode ? "#373737ff" : "initial"
+          background: darkMode ? "#373737ff !important" : "initial"
         }),
 
         control: (base, state) => ({
