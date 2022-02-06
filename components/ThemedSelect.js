@@ -19,6 +19,7 @@ const {darkMode} = useGlobalContext()
 option: (styles, {isFocused, isSelected}) => ({
     ...styles,
     background: darkMode ? "#373737ff !important" : "initial",
+}),
 
         menuPortal: (base) => ({
           ...base,
