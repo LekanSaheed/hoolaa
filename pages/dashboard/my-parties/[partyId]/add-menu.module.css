@@ -8,6 +8,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+}
+.container {
+  padding: 13px;
 }
 .label {
   display: block;
@@ -15,6 +21,18 @@
   margin-bottom: 5px;
   font-weight: 600;
 }
+.input {
+  width: 100%;
+  padding: 10px;
+  border: solid 1px #dadada;
+  border-radius: 4px;
+}
+.input:focus {
+  outline: solid 1px #8800ff;
+  outline-radius: 4px;
+  -moz-outline-radius: 4px;
+}
+
 .flex {
   display: flex;
   flex-direction: column;

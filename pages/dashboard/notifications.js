@@ -14,13 +14,8 @@ import Wrapper from "../../components/Wrapper";
 import { Box } from "@mui/system";
 import classes from "./notifications.module.css";
 import { useGlobalContext } from "../../context/context";
-import {
-  Avatar,
-  Checkbox,
-  Divider,
-  IconButton,
-  useMediaQuery,
-} from "@mui/material";
+import { Avatar, Checkbox, Divider, useMediaQuery } from "@mui/material";
+import { IconButton } from "@material-ui/core";
 import moment from "moment";
 import {
   BsCalendarCheckFill,
@@ -138,7 +133,7 @@ const Notifications = () => {
       .then(() => {
         toast.success("Notification Deleted");
         setModal(false);
-        setNotification({});
+        setNotification(null);
       })
 
       .catch((err) => toast.error(err.message));
@@ -233,7 +228,7 @@ const Notifications = () => {
                   return `${getDays}d ago`;
                 }
               };
-              console.log(`${getHrs}h ${getMin}m ago`);
+
               const time = correct();
               return (
                 <motion.div
@@ -241,6 +236,7 @@ const Notifications = () => {
                   initial="hidden"
                   variants={listNotif}
                   key={instance.id}
+                  className={classes.notifMain}
                 >
                   <div
                     style={{
@@ -248,7 +244,10 @@ const Notifications = () => {
                     }}
                     className={`${classes.notification}`}
                     onClick={async () => {
-                      await updateNotification(instance.id);
+                      if (!instance.read) {
+                        await updateNotification(instance.id);
+                        console.log("Unread");
+                      }
                       if (notification) {
                         setNotification(null);
                         setTimeout(() => {
@@ -272,8 +271,10 @@ const Notifications = () => {
                         sx={{
                           backgroundColor:
                             instance.type === "event_start"
-                              ? "green"
-                              : "#A52A2A",
+                              ? "#5cb85c"
+                              : instance.type === "event_add"
+                              ? "#4a90e2"
+                              : "#e23636",
                           color: "white",
                         }}
                         src={
@@ -294,7 +295,7 @@ const Notifications = () => {
                         {" "}
                         <span
                           style={{
-                            fontWeight: instance.read ? "600" : "800",
+                            fontWeight: instance.read ? "600" : "700",
                             fontSize: instance.read ? "13px" : "normal",
                             color: instance.read ? "#a3a3a3" : "#8800ff",
                           }}
@@ -328,6 +329,7 @@ const Notifications = () => {
                       {time}
                     </Box>
                   </div>
+
                   <Divider />
                 </motion.div>
               );
@@ -336,7 +338,7 @@ const Notifications = () => {
 
         {isLg && (
           <div className={classes.opened_notif}>
-            Opened Notification
+            {!notification && <div className={classes.notif_2}></div>}
             {notification && (
               <motion.div
                 initial="hidden"
@@ -344,13 +346,27 @@ const Notifications = () => {
                 variants={singleNote}
                 className={classes.notif_2}
               >
-                <div className={classes.notif_header}>
+                <div>
                   {" "}
-                  {notification.notification.header}
+                  <div className={classes.notif_header}>
+                    {" "}
+                    {notification.notification.header}
+                  </div>
+                  <br />
+                  <div className={classes.notif_body}>
+                    {" "}
+                    {notification.notification.body}
+                  </div>
                 </div>
-                <div className={classes.notif_body}>
+                <div>
                   {" "}
-                  {notification.notification.body}
+                  <IconButton
+                    size="small"
+                    color="#8800ff"
+                    onClick={() => deleteeNotification(notification.id)}
+                  >
+                    <BsTrashFill />
+                  </IconButton>
                 </div>
               </motion.div>
             )}

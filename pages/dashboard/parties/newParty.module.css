@@ -85,7 +85,12 @@
   display: none;
 }
 .img_con {
+  height: 60vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .img_con img {
   width: 100%;
@@ -165,5 +170,11 @@
   }
   .mobileDate {
     display: none;
+  }
+}
+
+@media (min-width: 901px) {
+  .img_con img {
+    width: 50%;
   }
 }

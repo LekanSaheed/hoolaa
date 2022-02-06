@@ -24,9 +24,9 @@ import {
   MobileDatePicker,
   TimePicker,
 } from "@mui/lab";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import SwipeableViews from "react-swipeable-views";
@@ -53,7 +53,7 @@ import {
 import { useAuthState } from "../../../context/AuthContext";
 
 import Image from "next/image";
-import { BiCategory, BiDish, BiPlusCircle } from "react-icons/bi";
+import { BiCategory, BiDish, BiPlusCircle, BiArrowBack } from "react-icons/bi";
 import moment from "moment";
 import { MdAccountCircle } from "react-icons/md";
 import HoolaLoader from "../../../components/HoolaLoader";
@@ -261,7 +261,8 @@ function HorizontalLinearStepper() {
           fontSize: "10px !important",
         },
       },
-      "& .css-vn7koo-MuiStepper-root": {
+      "&.MuiStepper-root": {
+        marginBottom: "20px !important",
         [theme.breakpoints.down(767)]: {
           padding: "0px !important",
         },
@@ -329,7 +330,12 @@ function HorizontalLinearStepper() {
       {/* <HoolaLoader /> */}
       {loading && <HoolaLoader />}
       <Stepper
-        sx={{ borderBottom: 1, borderColor: "divider", padding: "10px" }}
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          padding: "10px",
+          marginBottom: "20px",
+        }}
         activeStep={activeStep}
       >
         {steps.map((label, index) => {
@@ -347,23 +353,42 @@ function HorizontalLinearStepper() {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - Continue to Menu Preparation
-          </Typography>
           <div className={classes.img_con}>
-            <img src="/done.png" />
+            <img src="/done.svg" />
           </div>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              sx={{ flex: "1 1 auto" }}
-            />
-            <Button onClick={handleReset}>Back</Button>
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: "15px",
+              fontWeight: "600",
+              padding: "15px",
+            }}
+          >
+            Congrats!!! your Party has been created. Proceed to setting your
+            reservations.
+          </div>
+          <Box
+            display="flex"
+            position="absolute"
+            bottom="60px"
+            justifyContent="space-between"
+            sx={{ flex: "1 1 auto" }}
+            paddingTop="10px"
+            width="100%"
+          >
             <Button
+              color="primary"
+              style={{ border: "solid 2px #8800ff", color: "#8800ff" }}
+              onClick={handleReset}
+            >
+              <BiArrowBack />
+            </Button>
+            <Button
+              color="primary"
+              style={{ background: "#8800ff", color: "#fff" }}
               onClick={() => router.push(`/dashboard/my-parties/${partyUrl}`)}
             >
-              Continue to Reservation
+              Set Reservation
             </Button>
           </Box>
         </React.Fragment>

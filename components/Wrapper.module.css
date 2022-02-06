@@ -21,9 +21,9 @@
   }
   .main {
     width: 100%;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     margin-left: 300px;
-    padding: 15px;
+    /* padding: 15px; */
     transition: all 0.2s;
   }
   .shrinkMain {
