@@ -24,7 +24,7 @@ const {darkMode} = useGlobalContext()
         control: (base, state) => ({
           ...base,
           minHeight: "43px",
-          color: "#000",
+         
 
 background: darkMode ? "#373737ff" : "initial",
 
