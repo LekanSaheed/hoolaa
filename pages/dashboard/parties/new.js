@@ -83,7 +83,7 @@ function HorizontalLinearStepper() {
 
   const [menus, setMenus] = useState([]);
   const { darkMode } = useGlobalContext();
-  const steps = ["Select Category", "Party details", "Review"];
+  const steps = ["", "", ""];
   const [loading, setLoading] = useState(false);
   const menuCategories = [
     { label: "Food", value: "food", icon: <IoFastFoodOutline /> },
