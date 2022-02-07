@@ -33,6 +33,10 @@ const ThemedSelect = (props) => {
               ? "#8800ff !important"
               : isSelected && !darkMode
               ? "#8800ff !important"
+              : !isSelected && darkMode
+              ? "#bababa"
+              : !isSelected
+              ? "#777b7e"
               : "inherit",
           padding: "22px",
           borderBottom: darkMode ? "solid 1px #efefef25" : "solid 1px #efefef",

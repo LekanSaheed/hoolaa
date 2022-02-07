@@ -280,20 +280,21 @@ function HorizontalLinearStepper() {
       },
       "& .Mui-focused": {
         border: "none !important",
-        backgroundColor: "red",
+
         outline: "none !important",
       },
       "& .MuiInputBase-root": {
-        fontFamily: "Montserrat",
+        fontFamily: "Montserrat !important",
+        color: darkMode ? "#efefef" : "#00000087",
+        background: darkMode ? "#373737ff" : "initial",
       },
       "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#8800ff  !important",
+        borderColor: "#a7a7a7  !important",
         // backgroundColor: "red",
         outline: "none",
+        borderRadius: "10px",
       },
-      "&.Mui-focused fieldset": {
-        borderColor: "#8800ff !important",
-      },
+
       "& .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root": {
         // color: "#8800ff",
         [theme.breakpoints.down(767)]: {
@@ -305,14 +306,7 @@ function HorizontalLinearStepper() {
     border: {
       // borderColor: "#8800ff !important",
       fontFamily: "washeim !important",
-      "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#8800ff  !important",
-        // backgroundColor: "red",
-        outline: "none",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#8800ff !important",
-      },
+      "& .MuiOutlinedInput-notchedOutline": {},
     },
     label: {
       fontSize: "10px !important",
@@ -505,176 +499,58 @@ function HorizontalLinearStepper() {
 
                 <br />
                 <br />
-                <LocalizationProvider dateAdapter={DateAdapter}>
-                  <DateTimePicker
-                    label="Select start date and time"
-                    value={start_date}
-                    onChange={(e) => setStartDate(e._d)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        size="small"
-                        fullWidth
+                <div className={classes.flex_gap}>
+                  <div>
+                    <label className={classes.label}>
+                      {" "}
+                      Start date and time
+                    </label>
+                    <LocalizationProvider dateAdapter={DateAdapter}>
+                      <DateTimePicker
+                        value={start_date}
+                        onChange={(e) => setStartDate(e._d)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                          />
+                        )}
                       />
-                    )}
-                  />
-                  {/* <div className={classes.lgDate}>
-                    <DesktopDatePicker
-                      inputFormat="MM/dd/yyyy"
-                      label="Select start date"
-                      value={start_date}
-                      onChange={(e) => setStartDate(e._d)}
-                      renderInput={(params) => (
-                        <TextField {...params} variant="outlined" />
-                      )}
+                    </LocalizationProvider>
+                  </div>
+                  <div>
+                    <label className={classes.label}> Street</label>
+                    <input
+                      required
+                      className={classes.input}
+                      value={street}
+                      onChange={(e) => setStreet(e.target.value)}
+                      placeholder="Street"
                     />
-                    <TimePicker
-                      label="Select time"
-                      renderInput={(params) => (
-                        <TextField {...params} variant="outlined" />
-                      )}
+                  </div>
+                  <div>
+                    <label className={classes.label}>City</label>
+                    <input
+                      className={classes.input}
+                      required
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="City"
                     />
-                  </div> */}
-                </LocalizationProvider>
-                <input
-                  required
-                  className={classes.input}
-                  value={street}
-                  onChange={(e) => setStreet(e.target.value)}
-                  placeholder="Street"
-                />
-                <input
-                  className={classes.input}
-                  required
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  placeholder="City"
-                />
-                <ThemedSelect
-                  options={naijaStates}
-                  value={state}
-                  onChange={(e) => setState(e)}
-                />
+                  </div>
+                  <div>
+                    <label className={classes.label}>State</label>
+                    <ThemedSelect
+                      options={naijaStates}
+                      value={state}
+                      onChange={(e) => setState(e)}
+                    />
+                  </div>
+                </div>
               </Box>
             ) : (
-              // ) : activeStep === 2 ? (
-              //   <Box>
-              //     <label className={classes.label}>Prepare Reservations</label>
-
-              //     <Box display="flex" flexDirection="column" gap="10px">
-              //       <Box>
-              //         <label className={classes.label}>Choose Img</label>
-              //         <label className={classes.upload1} htmlFor="upload_menu">
-              //           <input
-              //             className={classes.custom_file_input}
-              //             type="file"
-              //             id="upload_menu"
-              //           />
-              //           <BiPlusCircle />
-              //         </label>
-              //       </Box>
-
-              //       <Box>
-              //         <label className={classes.label}>Name</label>
-              //         <TextField
-              //           placeholder="Item Name"
-              //           variant="outlined"
-              //           size="small"
-              //           value={menuName}
-              //           fullWidth
-              //           onChange={(e) => setMenuName(e.target.value)}
-              //         />
-              //       </Box>
-              //       <Box>
-              //         <label className={classes.label}>Category</label>
-              //         <Select
-              //           options={menuCategories}
-              //           value={menuCategory}
-              //           placeholder="Select Category"
-              //           onChange={(e) => setMenuCategory(e)}
-              //           components={{ Option: IconOption }}
-              //         />
-              //       </Box>
-              //       <Box>
-              //         <label className={classes.label}>Price</label>
-              //         <TextField
-              //           type="number"
-              //           placeholder="$"
-              //           variant="outlined"
-              //           size="small"
-              //           value={menuPrice}
-              //           onChange={(e) => setMenuPrice(e.target.value)}
-              //         />
-              //       </Box>
-              //       {/* <Box>
-              //         <label className={classes.label}>Quantity</label>
-              //         <TextField
-              //           type="number"
-              //           placeholder="quantity"
-              //           variant="outlined"
-              //           size="small"
-              //           value={menuQuantity}
-              //           onChange={(e) => setMenuQuantity(e.target.value)}
-              //         />
-              //       </Box> */}
-              //       <Button
-              //         disabled={!menuName || !menuPrice || !menuQuantity}
-              //         variant="contained"
-              //         color="primary"
-              //         style={{
-              //           background:
-              //             !menuName || !menuPrice || !menuQuantity
-              //               ? "#efefef"
-              //               : "#8800ff",
-              //         }}
-              //         onClick={() =>
-              //           addMenu({
-              //             name: menuName,
-              //             price: menuPrice,
-              //             // quantity: menuQuantity,
-              //             id: new Date().getTime().toString(),
-              //           })
-              //         }
-              //       >
-              //         Add
-              //       </Button>
-              //     </Box>
-
-              //     <Box>
-              //       {menus.length > 0 &&
-              //         menus.map((m) => {
-              //           return (
-              //             <motion.div
-              //               initial={{ opacity: 0 }}
-              //               animate={{ opacity: 1 }}
-              //               transition={{ duration: 0.2 }}
-              //               style={{ display: "flex", gap: "10px" }}
-              //             >
-              //               <span>{m.name}</span>
-              //               <span>{`$${m.price}`}</span>
-              //               <span>{m.quantity}</span>
-
-              //               {/* <button onClick={() => increase(m.id)}>
-              //                 Increase
-              //               </button>
-              //               <button onClick={() => decrease(m.id)}>
-              //                 decrease
-              //               </button> */}
-              //               <button
-              //                 onClick={() => {
-              //                   setMenus(menus.filter((mn) => mn.id !== m.id));
-              //                 }}
-              //               >
-              //                 remove
-              //               </button>
-              //             </motion.div>
-              //           );
-              //         })}
-              //     </Box>
-              //   </Box>
-              // ) : (
-
               <Box>
                 <div
                   style={{
@@ -732,27 +608,57 @@ function HorizontalLinearStepper() {
               </Box>
             )}
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: "1 1 auto" }} />
+          <Box
+            marginTop="16px"
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              pt: 2,
+              justifyContent: "space-between",
+            }}
+          >
+            {
+              activeStep !== 0 && (
+                <Button
+                  color="primary"
+                  style={{
+                    border: "solid 2px #8800ff",
+                    color: "#8800ff",
+                    padding: "9px 17px",
+                    borderRadius: "8px !important",
+                  }}
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  <BiArrowBack />
+                </Button>
+              )
+              // <Box sx={{ flex: "1 1 auto" }} />
+            }
 
             <Button
+              fullWidth={activeStep === 0 ? true : false}
+              color="primary"
+              style={{
+                padding: "9px 35px",
+                borderRadius: "8px !important",
+                fontFamily: "Delius, Montserrat",
+                background:
+                  !category || isPrivate === null || !partyName || !cover_img
+                    ? "efefef"
+                    : "#8800ff",
+                color: "#fff",
+              }}
               disabled={
                 !category || isPrivate === null || !partyName || !cover_img
               }
-              variant={activeStep === 2 ? "contained" : "outlined"}
+              variant={"contained"}
               onClick={
                 activeStep === steps.length - 1 ? handleImageUpload : handleNext
               }
             >
-              {activeStep === steps.length - 1 ? "Start Party" : "Next"}
+              {activeStep === steps.length - 1 ? "Start Party" : "Continue"}
             </Button>
           </Box>
         </React.Fragment>
